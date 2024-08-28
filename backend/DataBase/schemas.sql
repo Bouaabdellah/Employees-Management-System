@@ -10,7 +10,7 @@ CREATE TABLE user(
     salary INT NOT NULL,
     super_id INT,
     branch_id INT NOT NULL,
-    is_admin BOOLEAN,
+    role_id INT NOT NULL,
     FOREIGN KEY(super_id) REFERENCES user(id) ON DELETE
     SET NULL
 );
@@ -21,4 +21,9 @@ CREATE TABLE branch(
     mgr_id INT,
     start_day DATE NOT NULL,
     FOREIGN KEY(mgr_id) REFERENCES user(id) ON DELETE SET NULL
+);
+
+CREATE TABLE roles(
+    role_id INT PRIMARY KEY AUTO_INCREMENT,
+    role_name VARCHAR(20) NOT NULL
 );
