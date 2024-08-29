@@ -1,13 +1,4 @@
-import express from 'express';
-import pool from '../utils/dbConnection.js';
-import handlJWT from '../middleware/verifyJWT.js';
-import handlRoles from '../middleware/verifyRole.js';
-import rolesList from '../config/rolesList.js';
-
-const addBranchRouter = express.Router();
-const requirementRoles = rolesList.find(ele => ele.role_name === 'admin');
-
-addBranchRouter.post('/',handlJWT,handlRoles(requirementRoles.role_id),async (req,res) => {
+const addBranch = async (req,res) => {
     try {
        const {branchName,mgrID,startDay} = req.body;
        // if the user don 't enter information
@@ -33,6 +24,6 @@ addBranchRouter.post('/',handlJWT,handlRoles(requirementRoles.role_id),async (re
         console.log(error);
         res.status(500).json({message : 'internal error'});
     }
-});
+}
 
-export default addBranchRouter;
+export default addBranch;
