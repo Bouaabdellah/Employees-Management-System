@@ -2,11 +2,13 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import pool from "../utils/dbConnection.js";
 
-export const loginRouter = express.Router();
+const loginRouter = express.Router();
 
 loginRouter.get('/adminlogin',async (req,res) => {
     try {
     const {email,password} = req.body;
+    if (!email || !password)
+        return res.status(400).json({loginStatus : false, message : `email and password are required`});
     const [currentuser] = await pool.query(`
         SELECT *
         FROM user
@@ -14,22 +16,14 @@ loginRouter.get('/adminlogin',async (req,res) => {
     `,[email]);
     const user = currentuser[0];
     if (!user)
-       return res.status(403).json({loginStatus : false, message : `user don 't exist`}); 
+       return res.status(401).json({loginStatus : false, message : `user don 't exist`}); 
     if (user.user_password !== password)
-        return res.status(403).json({loginStatus : false, message : `password wrong`});
-    // select employee role
-    const roleID = user.role_id;
-    const [rolearray] = await pool.query(`
-        SELECT role_name
-        FROM roles
-        WHERE role_id=?
-    `,[roleID]);
-    const roleName = rolearray[0].role_name;
+        return res.status(401).json({loginStatus : false, message : `password wrong`});
     // making jwt tokens
     const accessToken = jwt.sign({
         userInfo : {
             email : user.email,
-            roles : roleName
+            role : user.role_id
         }},
         process.env.access_token_secret,
         {
@@ -44,7 +38,6 @@ loginRouter.get('/adminlogin',async (req,res) => {
             expiresIn : '1d'
         }
     );
-    console.log(refreshToken);
     res.cookie('jwt',refreshToken,{httpOnly : true, maxAge : 1000 * 60 * 60 * 24});
     return res.status(200).json({loginStatus : true, message : 'login with success', accessToken : accessToken}); 
     } catch (error) {
@@ -52,3 +45,5 @@ loginRouter.get('/adminlogin',async (req,res) => {
         res.status(500).json({loginStatus : false, message : 'internl error'});
     }
 });
+
+export default loginRouter;
