@@ -1,3 +1,5 @@
+import pool from '../../utils/dbConnection.js';
+
 const addBranch = async (req,res) => {
     try {
        const {branchName,mgrID,startDay} = req.body;
