@@ -1,6 +1,7 @@
 import pool from '../../utils/dbConnection.js';
 
 const deleteBranch = async (req,res) => {
+    try {
     const {branchName} = req.body;
     if (!branchName)
         return res.status(400).json({message : "branch name are required"});
@@ -17,6 +18,11 @@ const deleteBranch = async (req,res) => {
         WHERE branch_id=?
         `,branchExist[0].branch_id);
     return res.status(204).json({message : `delete the branch ${branchName} with success`});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message : 'internal error'});
+    }
+    
 }
 
 export default deleteBranch;
