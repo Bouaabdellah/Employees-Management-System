@@ -27,10 +27,10 @@ const updateBranch = async (req,res) => {
             update branch
             set branch_name=?, mgr_id=?, start_day=?
             `,[branchName,mgrID,startDay]);
-            res.status(200).json({message : `update the branch ${branchName} with success, it will managed by ${managerName}`});
+        return res.status(200).json({message : `update the branch ${branchName} with success, it will managed by ${managerName}`});
     } catch (error) {
         console.log(error);
-        res.status(500).json({message : 'internal error'});
+        return res.status(500).json({message : 'internal error'});
     }
 }
 
