@@ -17,12 +17,11 @@ const deleteBranch = async (req,res) => {
         DELETE FROM branch
         WHERE branch_id=?
         `,branchExist[0].branch_id);
-    return res.status(204).json({message : `delete the branch ${branchExist[0].branch_name} with success`});
+    return res.status(204);
     } catch (error) {
         console.log(error);
         return res.status(500).json({message : 'internal error'});
-    }
-    
+    }  
 }
 
 export default deleteBranch;
