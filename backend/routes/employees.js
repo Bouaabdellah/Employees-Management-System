@@ -14,5 +14,6 @@ employeesRouter.get('/get_all',handlJWT,handlRoles(requirementRoles.role_id),get
 employeesRouter.get('/get_employee',handlJWT,handlRoles(requirementRoles.role_id),getEmployee);
 employeesRouter.delete('/delete',handlJWT,handlRoles(requirementRoles.role_id),deleteEmployee);
 employeesRouter.post('/add',handlJWT,handlRoles(requirementRoles.role_id),addEmployee);
+employeesRouter.put('/update',handlJWT,handlRoles(requirementRoles.role_id),addEmployee);
 
 export default employeesRouter;

@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import pool from "../utils/dbConnection.js";
+import bcrypt from 'bcrypt';
 
 const loginRouter = express.Router();
 
@@ -17,7 +18,8 @@ loginRouter.get('/adminlogin',async (req,res) => {
     const user = currentuser[0];
     if (!user)
        return res.status(401).json({loginStatus : false, message : `user don 't exist`}); 
-    if (user.user_password !== password)
+    const correctPWD = await bcrypt.compare(password,user.user_password);
+    if (!correctPWD)
         return res.status(401).json({loginStatus : false, message : `password wrong`});
     // making jwt tokens
     const accessToken = jwt.sign({
