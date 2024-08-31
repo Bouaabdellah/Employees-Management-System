@@ -1,4 +1,3 @@
-import branch from "../routes/branch.js";
 import pool from "../utils/dbConnection.js";
 
 const branchsList = async (req,res) => {

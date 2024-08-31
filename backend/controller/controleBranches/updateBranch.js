@@ -1,4 +1,5 @@
 import pool from '../../utils/dbConnection.js';
+import exist from '../../config/exist.js';
 
 const updateBranch = async (req,res) => {
     try {
@@ -7,22 +8,18 @@ const updateBranch = async (req,res) => {
        if (!branchName || !mgrID || !startDay || !branchID)
         return res.status(400).json({message : 'branch name and id and manager id and start date are required'});
        // confirm that branch exist
-       const [branch]  = await pool.query(`
-        SELECT *
-        from branch
-        where branch_id=?
-        `,[branchID]);
-       if (!branch.length)
-        return res.status(400).json({message : "the branch don 't exist"});
+       const existBranch = await exist('branch','branch_id',branchID);
+        if (!existBranch)
+            return res.status(400).json({message : `the branch that have id = ${branchID} don 't exist`});
        // confirm that manager exist
-       const [manager]  = await pool.query(`
-        SELECT firstname,lastname
-        from user
-        where id=?
-        `,[mgrID]);
-       if (!manager.length)
-        return res.status(400).json({message : "the manager don 't exist"});
-       const managerName = manager[0].firstname + ' ' + manager[0].lastname;
+       const existMGR = await exist('user','id',mgrID);
+        if (!existMGR)
+            return res.status(400).json({message : `the manager that have id = ${mgrID} don 't exist`});
+        let [managerName] = await pool.query(`
+            SELECT firstname,lastname FROM user
+            WHERE id=?
+            `,[mgrID]);
+        managerName = managerName[0].firstname + ' ' + managerName[0].lastname;
         await pool.query(`
             update branch
             set branch_name=?, mgr_id=?, start_day=?

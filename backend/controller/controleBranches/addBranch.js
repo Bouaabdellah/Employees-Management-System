@@ -1,4 +1,5 @@
 import pool from '../../utils/dbConnection.js';
+import exist from '../../config/exist.js';
 
 const addBranch = async (req,res) => {
     try {
@@ -7,15 +8,15 @@ const addBranch = async (req,res) => {
        if (!branchName || !mgrID || !startDay)
         return res.status(400).json({message : 'branch name and manager id and start date are required'});
        // confirm that manager exist
-       const [manager]  = await pool.query(`
-        SELECT firstname,lastname
-        from user
-        where id=?
-        `,[mgrID]);
-       if (!manager.length)
-        return res.status(400).json({message : "the manager don 't exist"});
+       const existMGR = await exist('user','id',mgrID);
+        if (!existMGR)
+            return res.status(400).json({message : `the manager that have id = ${mgrID} don 't exist`});
        // add the branch
-       const managerName = manager[0].firstname + ' ' + manager[0].lastname;
+       let [managerName] = await pool.query(`
+        SELECT firstname,lastname FROM user
+        WHERE id=?
+        `,[mgrID]);
+        managerName = managerName[0].firstname + ' ' + managerName[0].lastname;
        await pool.query(`
         INSERT INTO branch(branch_name,mgr_id,start_day)
         values(?,?,?)

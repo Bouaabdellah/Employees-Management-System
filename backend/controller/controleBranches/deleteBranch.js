@@ -1,4 +1,5 @@
 import pool from '../../utils/dbConnection.js';
+import exist from '../../config/exist.js';
 
 const deleteBranch = async (req,res) => {
     try {
@@ -6,18 +7,14 @@ const deleteBranch = async (req,res) => {
     if (!branchID)
         return res.status(400).json({message : "branch id are required"});
     // determine if the branch exist
-    const [branchExist] = await pool.query(`
-        SELECT *
-        FROM branch
-        WHERE branch_id=?
-        `,[branchID]);
-    if (!branchExist.length)
-        return res.status(400).json({message : `the branch ${branchID} don 't exist`});   
+    const existBranch = await exist('branch','branch_id',branchID)
+    if (!existBranch)
+        return res.status(400).json({message : `the branch that have id = ${branchID} don 't exist`});  
     await pool.query(`
         DELETE FROM branch
         WHERE branch_id=?
-        `,branchExist[0].branch_id);
-    return res.status(204);
+        `,[branchID]);
+    return res.status(204).json({message : 'delete with success'});
     } catch (error) {
         console.log(error);
         return res.status(500).json({message : 'internal error'});
