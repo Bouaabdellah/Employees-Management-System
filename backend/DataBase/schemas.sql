@@ -11,8 +11,10 @@ CREATE TABLE user(
     super_id INT,
     branch_id INT NOT NULL,
     role_id INT NOT NULL,
-    FOREIGN KEY(super_id) REFERENCES user(id) ON DELETE
-    SET NULL
+    image_url VARCHAR(255),
+    FOREIGN KEY(super_id) REFERENCES user(id) ON DELETE SET NULL,
+    FOREIGN KEY(branch_id) REFERENCES branch(branch_id) ON DELETE SET NULL,
+    FOREIGN KEY(role_id) REFERENCES roles(role_id) ON DELETE SET NULL,
 );
 
 CREATE TABLE branch(
