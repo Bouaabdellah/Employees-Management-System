@@ -4,10 +4,11 @@ import loginRouter from './routes/adminLogin.js';
 import branch from './routes/branch.js';
 import employeesRouter from './routes/employees.js';
 import refreshAccessToken from './routes/refAccessTok.js';
+import corsOptions from './config/cors.js';
 
 const app = express();
 const port = process.env.port;
-app.use(cors());
+app.use(cors(corsOptions));
 // allow using json in request
 app.use(express.json());
 

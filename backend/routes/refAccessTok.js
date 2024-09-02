@@ -9,12 +9,14 @@ refreshAccessToken.get('/', async (req,res) => {
     if (!cookies?.jwt)
         return res.status(401).json({message : "you are unothorized"});
     const refreshToken = cookies.jwt;
-    const {user} = req.body;
+    const {email,role_id} = req.body;
+    if (!email || !role_id)
+        return res.status(400).json({message : "information are required"});
     // confirm that user exist
     const [existUser] = await pool.query(`
         SELECT * FROM user
         WHERE email=? AND role_id=?
-        `,[user.email,user.role_id]);
+        `,[email,role_id]);
     if (!existUser.length)
         return res.status(401).json({message : "you are unothorized"});
     jwt.verify(
@@ -25,8 +27,8 @@ refreshAccessToken.get('/', async (req,res) => {
                 return res.status(401).json({message : "you are unothorized"});
             const newAccessToken = jwt.sign({
                 userInfo : {
-                    email : user.email,
-                    role : user.role_id
+                    email : email,
+                    role : role_id
                 }},
                 process.env.access_token_secret,
                 {
