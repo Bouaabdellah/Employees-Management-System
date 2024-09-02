@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 const loginRouter = express.Router();
 
-loginRouter.get('/adminlogin',async (req,res) => {
+loginRouter.post('/login',async (req,res) => {
     try {
     const {email,password} = req.body;
     if (!email || !password)

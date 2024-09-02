@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { validateEmail,validatePWD } from '../config/validation';
+import axios from 'axios';
 
 const Login = () => {
    const [values,setValues] = useState({
@@ -18,7 +20,21 @@ const Login = () => {
    }
 
    // handle submits 
-   const handleSubmit = (eve : React.FormEvent<HTMLFormElement>) => {
+   const fetchLogin = async (email : string, pwd : string) => {
+    try {
+    const port = process.env.REACT_APP_server_port;
+    const response = await axios.post(`http://localhost:${port}/auth/login`,{
+      email : email,
+      password : pwd
+    }).then((response) => {
+    console.log('login with success');
+    setInvalid(false);
+    });
+    } catch (error) {
+      setInvalid(true);
+    }
+  }
+   const handleSubmit = async (eve : React.FormEvent<HTMLFormElement>) => {
    eve.preventDefault();
    // validation
    if (values.terms){
@@ -29,16 +45,16 @@ const Login = () => {
       const validEmail = validateEmail(values.email);
       const validPWD = validatePWD(values.pwd);
       if (!validEmail || !validPWD)
-       setInvalid(true);
+      setInvalid(true);
       else{
-       console.log('all think is wright');
-      }
+      console.log('all think is wright');
+      await fetchLogin(values.email,values.pwd);
     }
    }
-   }
+   }};
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-loginPage bg-center bg-cover'>
+    <div className='flex justify-center items-center h-screen bg-loginPage bg-center bg-cover'>
         <div className='px-4 py-6 bg-gray-200 rounded-lg'>
          {invalid && <div className="py-2 px-3 bg-red-200 rounded-md text-red-600 mb-4">invalid login, try again</div>}
          <form action="" onSubmit={handleSubmit}>
@@ -57,27 +73,17 @@ const Login = () => {
                 <label htmlFor="terms">you are agree with terms & conditions</label>
             </div>
             <input type="submit" value="Sign in" 
-            className='text-center py-2 text-white font-semibold bg-green-700 block w-full'/>
+            className='text-center py-2 text-white font-semibold bg-green-700 block w-full rounded-md'/>
         </form>   
         </div>  
     </div>
   )
-}
+};
 
 export default Login;
 
-const validateEmail = (email : string) : boolean => {
-  const regEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regEmail.test(email);
-}
-
-const validatePWD = (pwd : string) : boolean => {
-  const validation = [/[a-z]/g,/[A-Z]/g,/[0-9]/g,/[$@$!%*#.?&-_]/g];
-  let stepsValidation = 0;
-  validation.forEach((ele : RegExp) : void => {
-    if (ele.test(pwd))
-      stepsValidation++;
-  });
-  console.log(stepsValidation);
-  return validation.length === stepsValidation;
-}
+// interface data{
+//   loginStatus : boolean;
+//   message : string;
+//   accessToken : string;
+// }

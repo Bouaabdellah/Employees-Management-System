@@ -1,6 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import pool from '../utils/dbConnection';
+import pool from '../utils/dbConnection.js';
 
 const refreshAccessToken = express.Router();
 
