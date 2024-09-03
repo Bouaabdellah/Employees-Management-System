@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken';
 
 const handleJWT = (req,res,next) => {
-    const authHeader = req.headers.authorization || req.headers.Authorization;
-    if (!authHeader?.startsWith('Bearer '))
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken)
         return res.status(401).json({message : 'unothorized'});
-    const accessToken = authHeader.split(" ")[1]; // Barear Token
     jwt.verify(
         accessToken,
         process.env.access_token_secret,

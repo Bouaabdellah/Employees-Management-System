@@ -41,7 +41,8 @@ loginRouter.post('/login',async (req,res) => {
         }
     );
     res.cookie('jwt',refreshToken,{httpOnly : true, maxAge : 1000 * 60 * 60 * 24});
-    return res.status(200).json({loginStatus : true, message : 'login with success', accessToken : accessToken}); 
+    res.cookie('accessToken',accessToken,{httpOnly : true, maxAge : 1000 * 300});
+    return res.status(200).json({loginStatus : true, message : 'login with success'}); 
     } catch (error) {
         console.log(error);
         res.status(500).json({loginStatus : false, message : 'internl error'});

@@ -34,8 +34,8 @@ refreshAccessToken.get('/', async (req,res) => {
                 {
                     expiresIn : '300s'
                 });
-            return res.status(200).json({refreshStatus : true, message : 'refresh access token with success',
-                accessToken : newAccessToken});
+            res.cookie('accessToken',newAccessToken,{httpOnly : true, maxAge : 1000 * 300});
+            return res.status(200).json({refreshStatus : true, message : 'refresh access token with success'});
         }
     )
 });
