@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { validateEmail,validatePWD } from '../config/validation';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  axios.defaults.withCredentials = true;
+   const navigate = useNavigate();
    const [values,setValues] = useState({
     email : '',
     pwd : '',
@@ -23,12 +26,12 @@ const Login = () => {
    const fetchLogin = async (email : string, pwd : string) => {
     try {
     const port = process.env.REACT_APP_server_port;
-    const response = await axios.post(`http://localhost:${port}/auth/login`,{
+    await axios.post(`http://localhost:${port}/auth/login`,{
       email : email,
       password : pwd
     }).then((response) => {
-    console.log('login with success');
     setInvalid(false);
+    navigate('/');
     });
     } catch (error) {
       setInvalid(true);
@@ -46,10 +49,8 @@ const Login = () => {
       const validPWD = validatePWD(values.pwd);
       if (!validEmail || !validPWD)
       setInvalid(true);
-      else{
-      console.log('all think is wright');
+      else
       await fetchLogin(values.email,values.pwd);
-    }
    }
    }};
 

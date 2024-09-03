@@ -18,7 +18,8 @@ const handleJWT = async (req,res,next) => {
         req.email = decoded.userInfo.email;
         req.role = decoded.userInfo.role;
         if (notexistAccess)
-        res.cookie('accessToken',accessToken,{httpOnly : true, maxAge : 1000 * 300});
+        res.cookie('accessToken',accessToken,{httpOnly : true,sameSite: 'None',
+            secure: true, maxAge : 1000 * 300});
         next();
         });
 };

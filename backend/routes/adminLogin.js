@@ -40,8 +40,10 @@ loginRouter.post('/login',async (req,res) => {
             expiresIn : '1d'
         }
     );
-    res.cookie('jwt',refreshToken,{httpOnly : true, maxAge : 1000 * 60 * 60 * 24});
-    res.cookie('accessToken',accessToken,{httpOnly : true, maxAge : 1000 * 300});
+    res.cookie('jwt',refreshToken,{httpOnly : true,sameSite: 'None',
+        secure: true, maxAge : 1000 * 60 * 60 * 24});
+    res.cookie('accessToken',accessToken,{httpOnly : true,sameSite: 'None',
+        secure: true, maxAge : 1000 * 300});
     return res.status(200).json({loginStatus : true, message : 'login with success'}); 
     } catch (error) {
         console.log(error);
