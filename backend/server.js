@@ -3,7 +3,6 @@ import cors from 'cors';
 import loginRouter from './routes/adminLogin.js';
 import branch from './routes/branch.js';
 import employeesRouter from './routes/employees.js';
-import refreshAccessToken from './routes/refAccessTok.js';
 import corsOptions from './config/cors.js';
 import cookieParser from 'cookie-parser';
 
@@ -19,7 +18,6 @@ app.use(cookieParser());
 app.use('/auth',loginRouter);
 app.use('/branch',branch);
 app.use('/employees',employeesRouter);
-app.use('/refresh',refreshAccessToken);
 
 
 app.listen(port, () => {
