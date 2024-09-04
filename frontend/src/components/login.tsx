@@ -36,7 +36,7 @@ const Login = () => {
     setInvalid(false);
     dispatch(setStoreEmail(response.data.email));
     dispatch(setRole_id(response.data.role_id));
-    navigate('/');
+    navigate('/home');
     });
     } catch (error) {
       setInvalid(true);
@@ -53,7 +53,7 @@ const Login = () => {
       const validEmail = validateEmail(values.email);
       const validPWD = validatePWD(values.pwd);
       if (!validEmail || !validPWD)
-      setInvalid(true);
+        setInvalid(true);
       else
       await fetchLogin(values.email,values.pwd);
    }
