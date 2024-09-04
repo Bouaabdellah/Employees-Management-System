@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { validateEmail,validatePWD } from '../config/validation';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setEmail as setStoreEmail,setRole_id } from '../stores/userInfo';
 
 const Login = () => {
   axios.defaults.withCredentials = true;
    const navigate = useNavigate();
+   const dispatch = useDispatch();
    const [values,setValues] = useState({
     email : '',
     pwd : '',
@@ -31,6 +34,8 @@ const Login = () => {
       password : pwd
     }).then((response) => {
     setInvalid(false);
+    dispatch(setStoreEmail(response.data.email));
+    dispatch(setRole_id(response.data.role_id));
     navigate('/');
     });
     } catch (error) {
