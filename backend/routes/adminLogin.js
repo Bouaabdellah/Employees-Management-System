@@ -33,8 +33,10 @@ loginRouter.post('/login',async (req,res) => {
         }
     );
     const refreshToken = jwt.sign({
-        email : user.email
-        },
+        userInfo : {
+            email : user.email,
+            role : user.role_id
+        }},
         process.env.refresh_token_secret,
         {
             expiresIn : '1d'

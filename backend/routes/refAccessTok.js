@@ -6,7 +6,10 @@ const refreshAccessToken = async (req,res) => {
     if (!cookies?.jwt)
         return res.status(401).json({message : "you are unothorized"});
     const refreshToken = cookies.jwt;
-    const {adminEmail,adminRole_id} = req.body;
+    if (!refreshToken)
+        return res.status(401).json({message : "you are unothorized"});
+    const decoded = jwt.decode(refreshToken, { complete: true });
+    const {email : adminEmail,role : adminRole_id} = decoded.payload.userInfo;
     if (!adminEmail || !adminRole_id)
         return res.status(400).json({message : "information are required"});
     // confirm that user exist
