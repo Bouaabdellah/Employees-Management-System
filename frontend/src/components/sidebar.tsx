@@ -1,8 +1,15 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import rootState from '../interfaces/rootState';
 import { useEffect, useState } from 'react';
+import { IoMdClose } from "react-icons/io";
+import { IoHomeOutline } from "react-icons/io5";
+import { MdOutlineManageAccounts } from "react-icons/md";
+import { FaCodeBranch } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
+import { MdLogout } from "react-icons/md";
+import { setSidebar } from '../stores/sidebar';
 
 
 const Sidebar = () => {
@@ -27,28 +34,63 @@ const Sidebar = () => {
       };
     getRole();
   },[]);
+  const displaySidebar = useSelector((state : rootState) => state.sidebar.displaySidebar);
+  const dispatch = useDispatch();
+
   return (
-    <ul>
+    <div>
+    <div className={`absolute top-0 ${displaySidebar ? 'left-0' : '-left-full'} duration-300
+    w-full h-full z-10 bg-gray-50`}>
+    </div>
+    <div className={`bg-custom-gradient text-white h-full w-full md:w-1/4 p-4 md:rounded-r-xl
+      fixed z-20 top-0 ${displaySidebar ? 'left-0' : '-left-full'} duration-300`}>
+      <div className='flex justify-between items-center text-xl font-semibold mb-6'>
+        <div>
+          Sidebar
+        </div>
+        <div className='cursor-pointer' onClick={() => dispatch(setSidebar())}>
+        <IoMdClose />
+        </div>
+      </div>
+      <ul className='flex flex-col gap-4'>
         <li>
-            <Link to="/home">Home</Link>
+          <NavLink to="/home" className='flex items-center gap-2'>
+          <IoHomeOutline />
+          <span>Home</span>
+          </NavLink>
         </li>
         {role_id === adminRoleID &&
-        <div>
-          <li>
-            <Link to="/manage-employees">Manage Employees</Link>
-        </li>
         <li>
-            <Link to="/branches">Branches</Link>
+          <NavLink to="/manage-employees" className='flex items-center gap-2'>
+          <MdOutlineManageAccounts />
+          <span>Manage Employees</span>
+          </NavLink>
+        </li>
+        }
+        {role_id === adminRoleID &&
+        <li>
+          <NavLink to="/branches" className='flex items-center gap-2'>
+          <FaCodeBranch />
+          <span>Branches</span>
+          </NavLink>
         </li>   
-        </div>
         }
         <li>
-            <Link to="/profile">Profile</Link>
+          <NavLink to="/profile" className='flex items-center gap-2'>
+          <CgProfile />
+          <span>Profile</span>
+          </NavLink>
         </li>
         <li>
-            <Link to="/">Logout</Link>
+          <NavLink to="/" className='flex items-center gap-2'>
+          <MdLogout />
+          <span>Logout</span>
+          </NavLink>
         </li>
-    </ul>
+    </ul> 
+    </div>
+    </div>
+    
   )
 }
 

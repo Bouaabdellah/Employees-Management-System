@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userInfo from "./userInfo";
+import sideBar from "./sidebar";
 
 const store = configureStore({
    reducer : {
-      userInformation : userInfo
+      userInformation : userInfo,
+      sidebar : sideBar
    }
 });
 

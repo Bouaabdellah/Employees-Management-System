@@ -6,8 +6,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage : {
-        "loginPage" : "url('/src/imgs/digitization-6497133.jpg')"
-      }
+        "loginPage" : "url('/src/imgs/digitization-6497133.jpg')",
+        'custom-gradient': 'linear-gradient(35deg, #494949, #313131)',
+      },
     },
   },
   plugins: [],
