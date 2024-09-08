@@ -5,8 +5,7 @@ import Dashboard from './dashboard';
 function Home() {
   return (
     <div>
-      <Dashboard/>
-      <Sidebar/>
+      home
     </div>
   )
 }

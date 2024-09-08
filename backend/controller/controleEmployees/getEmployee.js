@@ -2,7 +2,7 @@ import pool from '../../utils/dbConnection.js';
 
 const getEmployee = async (req,res) => {
     try {
-       const {firstName,lastName,id} = req.body;
+       const {firstName,lastName,id} = req.query;
        if (!firstName && !lastName && !id)
         return res.status(400).json({message : "you need at least one index"}); 
        const [employees] = await pool.query(`

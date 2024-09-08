@@ -18,9 +18,8 @@ const Sidebar = () => {
   const [adminRoleID,setadminRole] = useState(0) ;
   useEffect(() => {
     const getRole = async () => {
-        let role;
         try {
-        role = await axios.get(`http://localhost:${port}/roleID`,
+        await axios.get(`http://localhost:${port}/roleID`,
         {params : {
            role_name : "admin" 
         }})
@@ -30,7 +29,6 @@ const Sidebar = () => {
       } catch (error) {
         console.log(error);
       }
-      return role;
       };
     getRole();
   },[]);
@@ -40,27 +38,28 @@ const Sidebar = () => {
   return (
     <div>
     <div className={`absolute top-0 ${displaySidebar ? 'left-0' : '-left-full'} duration-300
-    w-full h-full z-10 bg-gray-50`}>
+    w-full h-full z-10 bg-gray-400 opacity-10`}>
     </div>
-    <div className={`bg-custom-gradient text-white h-full w-full md:w-1/4 p-4 md:rounded-r-xl
+    <div className={`bg-custom-gradient text-white h-full w-full md:w-1/4 py-4 md:rounded-r-xl
       fixed z-20 top-0 ${displaySidebar ? 'left-0' : '-left-full'} duration-300`}>
-      <div className='flex justify-between items-center text-xl font-semibold mb-6'>
+      <div className='flex justify-between items-center text-xl font-semibold mb-6 px-4'>
         <div>
           Sidebar
         </div>
-        <div className='cursor-pointer' onClick={() => dispatch(setSidebar())}>
+        <div className='cursor-pointer p-1 duration-300 rounded-md hover:bg-[#494949]'
+        onClick={() => dispatch(setSidebar())}>
         <IoMdClose />
         </div>
       </div>
-      <ul className='flex flex-col gap-4'>
-        <li>
+      <ul className='flex flex-col'>
+        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
           <NavLink to="/home" className='flex items-center gap-2'>
           <IoHomeOutline />
           <span>Home</span>
           </NavLink>
         </li>
         {role_id === adminRoleID &&
-        <li>
+        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
           <NavLink to="/manage-employees" className='flex items-center gap-2'>
           <MdOutlineManageAccounts />
           <span>Manage Employees</span>
@@ -68,20 +67,20 @@ const Sidebar = () => {
         </li>
         }
         {role_id === adminRoleID &&
-        <li>
+        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
           <NavLink to="/branches" className='flex items-center gap-2'>
           <FaCodeBranch />
           <span>Branches</span>
           </NavLink>
         </li>   
         }
-        <li>
+        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
           <NavLink to="/profile" className='flex items-center gap-2'>
           <CgProfile />
           <span>Profile</span>
           </NavLink>
         </li>
-        <li>
+        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
           <NavLink to="/" className='flex items-center gap-2'>
           <MdLogout />
           <span>Logout</span>

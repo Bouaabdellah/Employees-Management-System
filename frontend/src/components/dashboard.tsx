@@ -6,16 +6,17 @@ import Container from "./container";
 
 function Dashboard() {
   const dispatch = useDispatch();
-  const username = useSelector((state : rootState) => state.userInformation.username);
+  //const username = useSelector((state : rootState) => state.userInformation.username);
   return (
-    <div className="bg-gray-200">
+    <div className="bg-gray-200 shadow-lg">
     <Container>
     <div className="flex gap-4 items-center py-4">
-    <div className='w-fit cursor-pointer text-xl' onClick={() => dispatch(setSidebar())}>
+    <div className='w-fit cursor-pointer text-xl p-1 border border-solid border-gray-400 rounded-md' 
+    onClick={() => dispatch(setSidebar())}>
     <FaBars/>
     </div>
     <div className="capitalize text-xl">
-    {username}
+    employees mangament system
     </div>
     </div>
     </Container>
