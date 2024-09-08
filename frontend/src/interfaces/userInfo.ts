@@ -1,5 +1,6 @@
 interface userInfoInterfase{
-   email : String;
+   username : string;
+   id : number;
    role_id : Number;
 }
 

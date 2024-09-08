@@ -1,26 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
+import userInfoInterfase from "../interfaces/userInfo";
 
-interface state{
-    email : string;
-    role_id : number;
-}
-const initialState : state = {
-    email : "",
-    role_id : 0
+const initialState : userInfoInterfase = {
+    username : "",
+    role_id : 0,
+    id : 0
 }
 export const userSlice = createSlice({
    name : "userInfo",
    initialState,
    reducers : {
-    setEmail : (state : state,action) => {
-    state.email = action.payload;
+    setusername : (state : userInfoInterfase,action) => {
+    state.username = action.payload;
     },
-    setRole_id : (state : state,action) => {
+    setRole_id : (state : userInfoInterfase,action) => {
     state.role_id = action.payload;
+    },
+    setID : (state : userInfoInterfase,action) => {
+        state.id = action.payload;
     }
    }
 });
 
-export const {setEmail,setRole_id} = userSlice.actions;
+export const {setusername,setRole_id,setID} = userSlice.actions;
 
 export default userSlice.reducer;

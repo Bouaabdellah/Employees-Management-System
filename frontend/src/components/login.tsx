@@ -3,7 +3,7 @@ import { validateEmail,validatePWD } from '../config/validation';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setEmail as setStoreEmail,setRole_id } from '../stores/userInfo';
+import { setusername,setRole_id, setID } from '../stores/userInfo';
 
 const Login = () => {
   axios.defaults.withCredentials = true;
@@ -34,8 +34,9 @@ const Login = () => {
       password : pwd
     }).then((response) => {
     setInvalid(false);
-    dispatch(setStoreEmail(response.data.email));
+    dispatch(setusername(`${response.data.firstname} ${response.data.lastname}`));
     dispatch(setRole_id(response.data.role_id));
+    dispatch(setID(response.data.id));
     navigate('/home');
     });
     } catch (error) {
@@ -87,9 +88,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// interface data{
-//   loginStatus : boolean;
-//   message : string;
-//   accessToken : string;
-// }
