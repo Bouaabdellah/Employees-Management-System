@@ -37,8 +37,8 @@ const Sidebar = () => {
 
   return (
     <div>
-    <div className={`absolute top-0 ${displaySidebar ? 'left-0' : '-left-full'} duration-300
-    w-full h-full z-10 bg-gray-400 opacity-10`}>
+    <div className={`fixed top-0 ${displaySidebar ? 'left-0' : '-left-full'} duration-300
+    w-full h-full z-10 bg-gray-400 opacity-30`}>
     </div>
     <div className={`bg-custom-gradient text-white h-full w-full md:w-1/4 py-4 md:rounded-r-xl
       fixed z-20 top-0 ${displaySidebar ? 'left-0' : '-left-full'} duration-300`}>
