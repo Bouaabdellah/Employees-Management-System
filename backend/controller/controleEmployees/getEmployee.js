@@ -17,6 +17,10 @@ const getEmployee = async (req,res) => {
         ]);
         if (!employees.length)
             return res.status(200).json({message : "employee don 't exist"});
+        // convert date from global date to local date
+        const date = new Date(employees[0].birthday);
+        const localDate = date.toLocaleDateString('en-US',{timeZone : 'Africa/Algiers'});
+        employees[0].birthday = localDate;
         return res.status(200).json({message : "serche the employee with success", employees : employees});
     } catch (error) {
         console.log(error);

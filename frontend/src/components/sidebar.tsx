@@ -52,36 +52,41 @@ const Sidebar = () => {
         </div>
       </div>
       <ul className='flex flex-col'>
-        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
-          <NavLink to="/home" className='flex items-center gap-2'>
+        <li className="hover:bg-slate-600 py-0 px-4 rounded-md hover:text-green-300"
+        onClick={() => dispatch(setSidebar())}>
+          <NavLink to="/home" className='flex items-center gap-2 py-2'>
           <IoHomeOutline />
           <span>Home</span>
           </NavLink>
         </li>
         {role_id === adminRoleID &&
-        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
-          <NavLink to="/manage-employees" className='flex items-center gap-2'>
+        <li className="hover:bg-slate-600 py-0 px-4 rounded-md hover:text-green-300"
+        onClick={() => dispatch(setSidebar())}>
+          <NavLink to="/manage-employees" className='flex items-center gap-2 py-2'>
           <MdOutlineManageAccounts />
           <span>Manage Employees</span>
           </NavLink>
         </li>
         }
         {role_id === adminRoleID &&
-        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
-          <NavLink to="/branches" className='flex items-center gap-2'>
+        <li className="hover:bg-slate-600 py-0 px-4 rounded-md hover:text-green-300"
+        onClick={() => dispatch(setSidebar())}>
+          <NavLink to="/branches" className='flex items-center gap-2 py-2'>
           <FaCodeBranch />
           <span>Branches</span>
           </NavLink>
         </li>   
         }
-        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
-          <NavLink to="/profile" className='flex items-center gap-2'>
+        <li className="hover:bg-slate-600 py-0 px-4 rounded-md hover:text-green-300"
+        onClick={() => dispatch(setSidebar())}>
+          <NavLink to="/profile" className='flex items-center gap-2 py-2'>
           <CgProfile />
           <span>Profile</span>
           </NavLink>
         </li>
-        <li className="hover:bg-slate-600 py-2 px-4 rounded-md hover:text-green-300">
-          <NavLink to="/" className='flex items-center gap-2'>
+        <li className="hover:bg-slate-600 py-0 px-4 rounded-md hover:text-green-300"
+        onClick={() => dispatch(setSidebar())}>
+          <NavLink to="/" className='flex items-center gap-2 py-2'>
           <MdLogout />
           <span>Logout</span>
           </NavLink>

@@ -1,4 +1,3 @@
-import { EnumType } from "typescript";
 import { Url } from "url";
 
 type gender = 'M' | 'F';
@@ -7,8 +6,8 @@ interface employee{
   firstname : string;
   lastname : string;
   sex : gender;
-  birthday : Date;
-  start_day : Date;
+  birthday : string;
+  start_day : string;
   email : string;
   salary : number;
   super_id : number;
