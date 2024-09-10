@@ -1,12 +1,11 @@
 import { useState } from "react";
 import employee from "../interfaces/employee";
 
-function EditeProfile({employee} : {employee : employee | null}) {
-  console.log(employee?.birthday);
-  const birthday = employee?.birthday.split('/').forEach((ele) => ele = ele.padStart(2, '0'));
+function EditeProfile({employee} : {employee : employee}) {
+  const birthday : string[] = employee.birthday.split('/').map((ele) => ele = ele.padStart(2, '0'));
+  const birthdate:string = `${birthday[2]}-${birthday[0]}-${birthday[1]}`;
+  const [userInfo,setUserInfo] = useState<employee>(employee);
 
-  const birthdate = birthday && `${birthday[2]}-${birthday[0]}-${birthday[1]}`;
-  console.log(birthdate);
   return (
     <div className="w-fit mx-auto mt-8">
        <table>
@@ -20,7 +19,8 @@ function EditeProfile({employee} : {employee : employee | null}) {
         <label htmlFor="firstname" className="text-[18px] mr-4">firstname</label>
         </td>
         <td className="py-2">
-        <input type="text" id="firstname" className="bg-gray-200 py-2 px-4 rounded-md" defaultValue={employee?.firstname}/>
+        <input type="text" id="firstname" className="bg-gray-200 py-2 px-4 rounded-md" 
+        defaultValue={employee?.firstname} onChange={(e) => setUserInfo({...userInfo,firstname : e.target.value})}/>
         </td>
         </tr>
         <tr>

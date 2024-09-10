@@ -13,7 +13,7 @@ interface employee{
   super_id : number;
   branch_id : number;
   role_id : number;
-  image_url : Url;
+  image_url : Url | null;
 }
 
 export default employee;

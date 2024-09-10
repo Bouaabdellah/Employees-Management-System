@@ -8,7 +8,20 @@ import EditeProfile from "./editeProfile";
 
 function Profile() {
   const id = useSelector((state : rootState) => state.userInformation.id);
-  const [userInfo,setUserInfo] = useState<employee | null>(null);
+  const [userInfo,setUserInfo] = useState<employee>({
+  id : 0,
+  firstname : '',
+  lastname : '',
+  sex : 'M',
+  birthday : '',
+  start_day : '',
+  email : '',
+  salary : 0,
+  super_id : 0,
+  branch_id : 0,
+  role_id : 0,
+  image_url : null
+  });
   useEffect(() => {
     const fetchData = async () => {
         const port = process.env.REACT_APP_server_port;
@@ -43,7 +56,7 @@ function Profile() {
       </div>
       <div className="flex flex-col">
         <span className="capitalize">email address :</span>
-        <span className="text-blue-800 cursor-pointer">{userInfo?.email}</span>
+        <span className="text-blue-800 cursor-pointer">{userInfo.email}</span>
       </div>
     </div>
     <div className="py-6 px-8 border border-solid border-gray-400 bg-white rounded-lg flex flex-col gap-3">
@@ -52,19 +65,19 @@ function Profile() {
       </div>
       <div>
         <span className="text-[18xp] capitalize font-semibold mr-2">firstname :</span>
-        <span className="text-blue-800 capitalize">{userInfo?.firstname}</span>
+        <span className="text-blue-800 capitalize">{userInfo.firstname}</span>
       </div>
       <div>
         <span className="text-[18xp] capitalize font-semibold mr-2">lastname :</span>
-        <span className="text-blue-800 capitalize">{userInfo?.lastname}</span>
+        <span className="text-blue-800 capitalize">{userInfo.lastname}</span>
       </div>
       <div>
         <span className="text-[18xp] capitalize font-semibold mr-2">sex :</span>
-        <span className="text-blue-800 capitalize">{userInfo?.sex}</span>
+        <span className="text-blue-800 capitalize">{userInfo.sex}</span>
       </div>
       <div>
         <span className="text-[18xp] capitalize font-semibold mr-2">birthdate :</span>
-        <span className="text-blue-800 capitalize">{userInfo?.birthday}</span>
+        <span className="text-blue-800 capitalize">{userInfo.birthday}</span>
       </div>
     </div> 
     <div className="py-6 px-8 border border-solid border-gray-400 bg-white rounded-lg flex flex-col gap-3">
@@ -73,27 +86,27 @@ function Profile() {
       </div>
       <div>
       <span className="text-[18xp] capitalize font-semibold mr-2">ID :</span>
-      <span className="text-blue-800 capitalize">{userInfo?.id}</span>
+      <span className="text-blue-800 capitalize">{userInfo.id}</span>
       </div>
       <div>
       <span className="text-[18xp] capitalize font-semibold mr-2">branch ID :</span>
-      <span className="text-blue-800 capitalize">{userInfo?.branch_id}</span>
+      <span className="text-blue-800 capitalize">{userInfo.branch_id}</span>
       </div>
       <div>
       <span className="text-[18xp] capitalize font-semibold mr-2">manager ID :</span>
-      <span className="text-blue-800 capitalize">{userInfo?.super_id}</span>
+      <span className="text-blue-800 capitalize">{userInfo.super_id}</span>
       </div>
       <div>
       <span className="text-[18xp] capitalize font-semibold mr-2">role ID :</span>
-      <span className="text-blue-800 capitalize">{userInfo?.role_id}</span>
+      <span className="text-blue-800 capitalize">{userInfo.role_id}</span>
       </div>
       <div>
       <span className="text-[18xp] capitalize font-semibold mr-2">start at :</span>
-      <span className="text-blue-800 capitalize">{userInfo?.start_day}</span>
+      <span className="text-blue-800 capitalize">{userInfo.start_day}</span>
       </div>
       <div>
       <span className="text-[18xp] capitalize font-semibold mr-2">salary :</span>
-      <span className="text-blue-800 capitalize">{userInfo?.salary}$</span>
+      <span className="text-blue-800 capitalize">{userInfo.salary}$</span>
       </div>
     </div> 
     </div>
