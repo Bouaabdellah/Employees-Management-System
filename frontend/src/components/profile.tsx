@@ -16,6 +16,7 @@ function Profile() {
   birthday : '',
   start_day : '',
   email : '',
+  password : '',
   salary : 0,
   super_id : 0,
   branch_id : 0,
@@ -34,7 +35,7 @@ function Profile() {
             return res.data;
           });  
           const employee = await response.employees[0];
-          setUserInfo(employee);
+          setUserInfo({...employee,password : ''});
         } catch (error) {
            console.log(error);
         }

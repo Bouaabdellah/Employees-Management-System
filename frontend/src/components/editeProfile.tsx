@@ -28,7 +28,8 @@ function EditeProfile({employee} : {employee : employee}) {
         <label htmlFor="lastname" className="text-[18px] mr-4">lastname</label>
         </td>
         <td className="py-2">
-        <input type="text" id="lastname" className="bg-gray-200 py-2 px-4 rounded-md" defaultValue={employee?.lastname}/>
+        <input type="text" id="lastname" className="bg-gray-200 py-2 px-4 rounded-md" 
+        defaultValue={employee?.lastname} onChange={(e) => setUserInfo({...userInfo,lastname : e.target.value})}/>
         </td>
         </tr>
         <tr>
@@ -36,7 +37,8 @@ function EditeProfile({employee} : {employee : employee}) {
         <label htmlFor="sex" className="text-[18px] mr-4">sex</label>
         </td>
         <td className="py-2">
-        <select name="sex" id="sex" className="bg-gray-200 py-2 px-4 rounded-md" defaultValue={employee?.sex}>
+        <select name="sex" id="sex" className="bg-gray-200 py-2 px-4 rounded-md" 
+        defaultValue={employee?.sex} onChange={(e) => setUserInfo({...userInfo,sex : e.target.value === "M" ? 'M' : 'F'})}>
         <option value="M">M</option>
         <option value="F">F</option>
         </select>
@@ -47,7 +49,8 @@ function EditeProfile({employee} : {employee : employee}) {
         <label htmlFor="birthdate" className="text-[18px] mr-4">birthdate</label>
         </td>
         <td className="py-2">
-        <input type="date" id="birthdate" className="bg-gray-200 py-2 px-4 rounded-md" defaultValue={birthdate ? birthdate : '2005-09-29'}/>
+        <input type="date" id="birthdate" className="bg-gray-200 py-2 px-4 rounded-md" 
+        defaultValue={birthdate ? birthdate : '2005-09-29'} onChange={(e) => setUserInfo({...userInfo,birthday : e.target.value})}/>
         </td>
         </tr>
         <tr>
@@ -55,7 +58,8 @@ function EditeProfile({employee} : {employee : employee}) {
         <label htmlFor="email" className="text-[18px] mr-4">email</label>
         </td>
         <td className="py-2">
-        <input type="email" id="email" className="bg-gray-200 py-2 px-4 rounded-md" defaultValue={employee?.email}/>
+        <input type="email" id="email" className="bg-gray-200 py-2 px-4 rounded-md" 
+        defaultValue={employee?.email} onChange={(e) => setUserInfo({...userInfo,email : e.target.value})}/>
         </td>
         </tr>
         <tr>
@@ -63,7 +67,8 @@ function EditeProfile({employee} : {employee : employee}) {
         <label htmlFor="pwd" className="text-[18px] mr-4">password</label>
         </td>
         <td className="py-2">
-        <input type="password" id="pwd" className="bg-gray-200 py-2 px-4 rounded-md"/>
+        <input type="password" id="pwd" className="bg-gray-200 py-2 px-4 rounded-md"
+        onChange={(e) => setUserInfo({...userInfo,password : e.target.value})}/>
         </td>
         </tr>    
         </tbody>

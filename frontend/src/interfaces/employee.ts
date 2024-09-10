@@ -9,6 +9,7 @@ interface employee{
   birthday : string;
   start_day : string;
   email : string;
+  password : string;
   salary : number;
   super_id : number;
   branch_id : number;
