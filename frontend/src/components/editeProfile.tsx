@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import employee from "../interfaces/employee";
-import { validateBirthDate, validateNames } from "../config/validation";
+import { validateBirthDate, validateEmail, validateNames, validatePWD } from "../config/validation";
 import { inputFormat } from "../utils/date";
+import axios from "axios";
 
 function EditeProfile({employee} : {employee : employee}){
   const [edit,setEdit] = useState(false);
@@ -21,11 +22,49 @@ function EditeProfile({employee} : {employee : employee}){
     const firstnameValidation : boolean = validateNames(userInfo.firstname);
     const lastnameValidation : boolean = validateNames(userInfo.lastname);
     const birthdateValidation : boolean = validateBirthDate(userInfo.birthday);
+    const emailValidation : boolean = validateEmail(userInfo.email);
+    const pwdValidation : boolean = validatePWD(userInfo.password);
     setValidation({...validation,
     firstname : firstnameValidation,
     lastname : lastnameValidation,
-    birthday : birthdateValidation
+    birthday : birthdateValidation,
+    email : emailValidation,
+    password : pwdValidation
   });
+  }
+  const checkChanging = () : boolean => {
+    let validInfo = true;
+    for (let info in validation){
+      if (!info){
+        validInfo = false;
+        break;
+      }
+    }
+    return validInfo && (userInfo === employee || userInfo.password !== employee.password);
+  }
+  const sendData = async () => {
+  try {
+    const port = process.env.REACT_APP_server_port;
+    if (userInfo.birthday === employee.birthday)
+      userInfo.birthday = inputFormat(userInfo.birthday);
+    await axios.put(`http://localhost:${port}/employees/modify`,{
+      firstname : userInfo.firstname,
+      lastname : userInfo.lastname,
+      sex : userInfo.sex,
+      birthdate : userInfo.birthday,
+      email : userInfo.email,
+      password : userInfo.password,
+      id : userInfo.id
+    });  
+  } catch (error) {
+    console.log(error);
+  } 
+  }
+  const putData = async () => {
+    validateInfo();
+    if (checkChanging())
+      await sendData();
+    setEdit(false);
   }
 
   return (
@@ -86,7 +125,8 @@ function EditeProfile({employee} : {employee : employee}){
         </tr>
         <tr>
         <td className="py-2">
-        <label htmlFor="email" className="text-[18px] mr-4">email</label>
+        <label htmlFor="email" 
+        className={`text-[18px] mr-4 ${!validation.email && 'text-red-600'}`}>email</label>
         </td>
         <td className="py-2">
         <input type="email" id="email" className="bg-gray-200 py-2 px-4 rounded-md" 
@@ -95,7 +135,8 @@ function EditeProfile({employee} : {employee : employee}){
         </tr>
         <tr>
         <td className="py-2">
-        <label htmlFor="pwd" className="text-[18px] mr-4">password</label>
+        <label htmlFor="pwd" 
+        className={`text-[18px] mr-4 ${!validation.password && 'text-red-600'}`}>password</label>
         </td>
         <td className="py-2">
         <input type="password" id="pwd" className="bg-gray-200 py-2 px-4 rounded-md"
@@ -106,7 +147,7 @@ function EditeProfile({employee} : {employee : employee}){
        </table> 
       <div className="flex gap-8 justify-center mt-6">
       <button className="py-2 px-4 capitalize bg-green-700 mr-6 rounded-md text-white
-        duration-300 hover:bg-green-800" onClick={() => validateInfo()}>
+        duration-300 hover:bg-green-800" onClick={() => putData()}>
         save
       </button>
       <button className="py-2 px-4 capitalize bg-gray-300 rounded-md
