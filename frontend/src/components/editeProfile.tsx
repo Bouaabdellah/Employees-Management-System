@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import employee from "../interfaces/employee";
 import { validateBirthDate, validateNames } from "../config/validation";
+import { inputFormat } from "../utils/date";
 
 function EditeProfile({employee} : {employee : employee}){
   const [edit,setEdit] = useState(false);
-  const birthday : string[] = employee.birthday.split('/').map((ele) => ele = ele.padStart(2, '0'));
-  const birthdate : string = `${birthday[2]}-${birthday[0]}-${birthday[1]}`;
+  const birthdate = inputFormat(employee.birthday);
   const [userInfo,setUserInfo] = useState<employee>(employee);
   useEffect(() => {
     setUserInfo(employee);
@@ -18,19 +18,16 @@ function EditeProfile({employee} : {employee : employee}){
     password : true
     });
   const validateInfo = () : void => {
-    if (validateNames(userInfo.firstname))
-      setValidation({...validation,firstname : true});
-    else
-      setValidation({...validation,firstname : false});
-    // if (validateNames(userInfo.lastname))
-    //   setValidation({...validation,lastname : true});
-    // else
-    //   setValidation({...validation,lastname : false});
-    // if (validateBirthDate(userInfo.birthday))
-    //   setValidation({...validation,birthday : true});
-    // else
-    //   setValidation({...validation,birthday : false});
+    const firstnameValidation : boolean = validateNames(userInfo.firstname);
+    const lastnameValidation : boolean = validateNames(userInfo.lastname);
+    const birthdateValidation : boolean = validateBirthDate(userInfo.birthday);
+    setValidation({...validation,
+    firstname : firstnameValidation,
+    lastname : lastnameValidation,
+    birthday : birthdateValidation
+  });
   }
+
   return (
     <div className="w-fit mx-auto mt-8">
        <div className="w-fit mx-auto mt-6 mb-2">
@@ -47,7 +44,8 @@ function EditeProfile({employee} : {employee : employee}){
         <tbody>
         <tr>
         <td className="py-2">
-        <label htmlFor="firstname" className={`text-[18px] mr-4 ${!validation.firstname && 'text-red-600'}`}>firstname</label>
+        <label htmlFor="firstname" 
+        className={`text-[18px] mr-4 ${!validation.firstname && 'text-red-600'}`}>firstname</label>
         </td>
         <td className="py-2">
         <input type="text" id="firstname" className="bg-gray-200 py-2 px-4 rounded-md" 
@@ -56,7 +54,8 @@ function EditeProfile({employee} : {employee : employee}){
         </tr>
         <tr>
         <td className="py-2">
-        <label htmlFor="lastname" className="text-[18px] mr-4">lastname</label>
+        <label htmlFor="lastname" 
+        className={`text-[18px] mr-4 ${!validation.lastname && 'text-red-600'}`}>lastname</label>
         </td>
         <td className="py-2">
         <input type="text" id="lastname" className="bg-gray-200 py-2 px-4 rounded-md" 
@@ -77,7 +76,8 @@ function EditeProfile({employee} : {employee : employee}){
         </tr>
         <tr>
         <td className="py-2">
-        <label htmlFor="birthdate" className="text-[18px] mr-4">birthdate</label>
+        <label htmlFor="birthdate" 
+        className={`text-[18px] mr-4 ${!validation.birthday && 'text-red-600'}`}>birthdate</label>
         </td>
         <td className="py-2">
         <input type="date" id="birthdate" className="bg-gray-200 py-2 px-4 rounded-md" 

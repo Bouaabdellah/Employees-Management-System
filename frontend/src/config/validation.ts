@@ -21,7 +21,7 @@ export const validateNames = (name : string) : boolean => {
 export const validateBirthDate = (date : string) : boolean => {
     const givenDate : Date = new Date(date);
     const now : Date = new Date();
-    let diffYears : number = givenDate.getFullYear() - now.getFullYear();
+    let diffYears : number = now.getFullYear() - givenDate.getFullYear();
     if ((givenDate.getMonth() > now.getMonth()) ||
     (givenDate.getMonth() === now.getMonth() && givenDate.getDay() > now.getDate()))
     diffYears--;
