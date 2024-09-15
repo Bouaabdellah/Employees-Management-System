@@ -43,7 +43,6 @@ function Profile() {
     fetchData();
   },[]);
   const username = useSelector((state : rootState) => state.userInformation.username);
-  const [edit,setEdit] = useState(false);
 
   return (
     <div className="py-12">
@@ -111,21 +110,10 @@ function Profile() {
       </div>
     </div> 
     </div>
-    <div className="w-fit mx-auto mt-6 mb-2">
-      <button className="capitalize py-2 px-4 bg-gray-300 rounded-md duration-300 hover:bg-gray-400"
-      onClick={() => setEdit(!edit)}>edit profile</button>
-    </div>
-    {edit &&
-    <div>
     <EditeProfile employee={userInfo}/> 
-    </div>}
     </Container>
     </div>
   )
 }
 
 export default Profile;
-
-// normal information
-// personal information
-// work information

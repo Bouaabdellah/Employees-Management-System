@@ -1,13 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import employee from "../interfaces/employee";
+import { validateBirthDate, validateNames } from "../config/validation";
 
-function EditeProfile({employee} : {employee : employee}) {
+function EditeProfile({employee} : {employee : employee}){
+  const [edit,setEdit] = useState(false);
   const birthday : string[] = employee.birthday.split('/').map((ele) => ele = ele.padStart(2, '0'));
-  const birthdate:string = `${birthday[2]}-${birthday[0]}-${birthday[1]}`;
+  const birthdate : string = `${birthday[2]}-${birthday[0]}-${birthday[1]}`;
   const [userInfo,setUserInfo] = useState<employee>(employee);
-
+  useEffect(() => {
+    setUserInfo(employee);
+  }, [employee]);
+  const [validation,setValidation] = useState({
+    email : true,
+    firstname : true,
+    lastname : true,
+    birthday : true,
+    password : true
+    });
+  const validateInfo = () : void => {
+    if (validateNames(userInfo.firstname))
+      setValidation({...validation,firstname : true});
+    else
+      setValidation({...validation,firstname : false});
+    // if (validateNames(userInfo.lastname))
+    //   setValidation({...validation,lastname : true});
+    // else
+    //   setValidation({...validation,lastname : false});
+    // if (validateBirthDate(userInfo.birthday))
+    //   setValidation({...validation,birthday : true});
+    // else
+    //   setValidation({...validation,birthday : false});
+  }
   return (
     <div className="w-fit mx-auto mt-8">
+       <div className="w-fit mx-auto mt-6 mb-2">
+       <button className="capitalize py-2 px-4 bg-gray-300 rounded-md duration-300 hover:bg-gray-400"
+        onClick={() => setEdit(!edit)}>edit profile</button>
+       </div>
+       {edit && 
+       <div>
        <table>
         <colgroup>
         <col span={1} className="w-[50px]"/>
@@ -16,7 +47,7 @@ function EditeProfile({employee} : {employee : employee}) {
         <tbody>
         <tr>
         <td className="py-2">
-        <label htmlFor="firstname" className="text-[18px] mr-4">firstname</label>
+        <label htmlFor="firstname" className={`text-[18px] mr-4 ${!validation.firstname && 'text-red-600'}`}>firstname</label>
         </td>
         <td className="py-2">
         <input type="text" id="firstname" className="bg-gray-200 py-2 px-4 rounded-md" 
@@ -72,17 +103,19 @@ function EditeProfile({employee} : {employee : employee}) {
         </td>
         </tr>    
         </tbody>
-       </table>
-        <div className="flex gap-8 justify-center mt-6">
-        <button className="py-2 px-4 capitalize bg-green-700 mr-6 rounded-md text-white
-        duration-300 hover:bg-green-800">
+       </table> 
+      <div className="flex gap-8 justify-center mt-6">
+      <button className="py-2 px-4 capitalize bg-green-700 mr-6 rounded-md text-white
+        duration-300 hover:bg-green-800" onClick={() => validateInfo()}>
         save
-        </button>
-        <button className="py-2 px-4 capitalize bg-gray-300 rounded-md
-        duration-300 hover:bg-gray-400">
+      </button>
+      <button className="py-2 px-4 capitalize bg-gray-300 rounded-md
+        duration-300 hover:bg-gray-400" onClick={() => setEdit(!edit)}>
         cancel
-        </button>    
-        </div>
+      </button>    
+       </div>
+       </div>
+       }  
     </div>
   )
 }
