@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import employee from "../interfaces/employee";
-import { validateBirthDate, validateEmail, validateNames, validatePWD } from "../config/validation";
-import { inputFormat } from "../utils/date";
+import employee from "../../interfaces/employee";
+import { validateBirthDate, validateEmail, validateNames, validatePWD } from "../../config/validation";
+import { inputFormat } from "../../utils/date";
 import axios from "axios";
 
 function EditeProfile({employee} : {employee : employee}){

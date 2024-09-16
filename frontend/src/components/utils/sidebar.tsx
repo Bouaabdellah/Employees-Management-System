@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import rootState from '../interfaces/rootState';
+import rootState from '../../interfaces/rootState';
 import { useEffect, useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
@@ -9,7 +9,7 @@ import { MdOutlineManageAccounts } from "react-icons/md";
 import { FaCodeBranch } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
-import { setSidebar } from '../stores/sidebar';
+import { setSidebar } from '../../stores/sidebar';
 
 
 const Sidebar = () => {
