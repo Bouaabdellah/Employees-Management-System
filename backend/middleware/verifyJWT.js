@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import refreshAccessToken from '../routes/refAccessTok.js';
+import refreshAccessToken from '../config/refAccessTok.js';
 
 const handleJWT = async (req,res,next) => {
     let accessToken = req.cookies.accessToken;

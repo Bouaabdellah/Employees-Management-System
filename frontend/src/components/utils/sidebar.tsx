@@ -19,9 +19,9 @@ const Sidebar = () => {
   useEffect(() => {
     const getRole = async () => {
         try {
-        await axios.get(`http://localhost:${port}/roleID`,
+        await axios.get(`http://localhost:${port}/role/roleID`,
         {params : {
-           role_name : "admin" 
+          role_name : "admin" 
         }})
       .then((response) => {
         setadminRole(response.data.roleID);

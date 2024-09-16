@@ -5,7 +5,7 @@ import branch from './routes/branch.js';
 import employeesRouter from './routes/employees.js';
 import corsOptions from './config/cors.js';
 import cookieParser from 'cookie-parser';
-import roleID from './routes/roleID.js';
+import role from './routes/role.js';
 
 const app = express();
 const port = process.env.port;
@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use('/auth',loginRouter);
 app.use('/branch',branch);
 app.use('/employees',employeesRouter);
-app.use('/roleID',roleID);
+app.use('/role',role);
 
 
 app.listen(port, () => {

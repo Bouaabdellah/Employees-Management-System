@@ -1,4 +1,3 @@
-import { Url } from "url";
 
 type gender = 'M' | 'F';
 interface employee{
@@ -14,7 +13,7 @@ interface employee{
   super_id : number;
   branch_id : number;
   role_id : number;
-  image_url : Url | null;
+  image_url : string | null;
 }
 
 export default employee;
