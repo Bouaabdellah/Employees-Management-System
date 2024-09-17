@@ -15,5 +15,20 @@ interface employee{
   role_id : number;
   image_url : string | null;
 }
+export const userInfoInitialze : employee = {
+  id : 0,
+  firstname : '',
+  lastname : '',
+  sex : 'M',
+  email : '',
+  password : '',
+  birthday : '',
+  start_day : '',
+  salary : 0,
+  super_id : 0,
+  role_id : 0,
+  branch_id : 0,
+  image_url : null
+};
 
 export default employee;

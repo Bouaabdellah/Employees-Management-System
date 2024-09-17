@@ -4,6 +4,7 @@ import { inputFormat } from "../../utils/date";
 import axios from "axios";
 import validatePersonalInfo from "../../config/validateEmployeeInfo";
 import checkAllTrue from "../../config/checkAllTrue";
+import personalInfo, { validationInitialze } from "../../interfaces/validation";
 
 function EditeProfile({employee} : {employee : employee}){
   const [edit,setEdit] = useState(false);
@@ -12,13 +13,7 @@ function EditeProfile({employee} : {employee : employee}){
   useEffect(() => {
     setUserInfo(employee);
   }, [employee]);
-  const [validation,setValidation] = useState({
-    email : true,
-    firstname : true,
-    lastname : true,
-    birthday : true,
-    password : true
-    });
+  const [validation,setValidation] = useState<personalInfo>(validationInitialze);
   const validateInfo = () : void => {
     const {firstnameValidation,lastnameValidation,birthdateValidation,
     emailValidation,pwdValidation} = validatePersonalInfo(userInfo);

@@ -1,38 +1,20 @@
 import { useEffect, useState } from "react"
-import employee from "../../interfaces/employee";
+import employee,{userInfoInitialze} from "../../interfaces/employee";
 import axios from "axios";
 import branch, { branchInit } from "../../interfaces/branch";
 import role, { roleInit } from "../../interfaces/role";
+import validatePersonalInfo from "../../config/validateEmployeeInfo";
+import personalInfo, { validationInitialze } from "../../interfaces/validation";
+import checkAllTrue from "../../config/checkAllTrue";
+import { validateStartDate } from "../../config/validation";
 
 const port = process.env.REACT_APP_server_port;
-const userInfoInitialze : employee = {
-    id : 0,
-    firstname : '',
-    lastname : '',
-    sex : 'M',
-    email : '',
-    password : '',
-    birthday : '',
-    start_day : '',
-    salary : 0,
-    super_id : 0,
-    role_id : 0,
-    branch_id : 0,
-    image_url : null
-};
-const validationInitialze = {
-    email : true,
-    firstname : true,
-    lastname : true,
-    birthday : true,
-    password : true,
-    image : true
-};
 
 function AddEmployee() {
   // stats
   const [userInfo,setUserInfo] = useState<employee>(userInfoInitialze);
-  const [validation,setValidation] = useState(validationInitialze);
+  const [validation,setValidation] = useState<personalInfo>(validationInitialze);
+  const [startDate,setStartDate] = useState<boolean>(true);
   const [addEmp,setAddEmp] = useState<boolean>(false);
   const [branches,setBranches] = useState<branch[]>([branchInit]);
   const [roles,setRoles] = useState<role[]>([roleInit]);
@@ -62,8 +44,52 @@ function AddEmployee() {
         console.log(error);
     }
     }
+  // add new employee
+  const addEmployee = async () => {
+  try {
+  await axios.post(`http://localhost:${port}/employees/add_employee`,{
+    firstname : userInfo.firstname,
+    lastname : userInfo.lastname,
+    sex : userInfo.sex,
+    birthdate : userInfo.birthday,
+    email : userInfo.email,
+    password : userInfo.password,
+    mgrID : userInfo.super_id,
+    branchID : userInfo.branch_id,
+    roleID : userInfo.role_id,
+    startDay : userInfo.start_day,
+    salary : userInfo.salary,
+    image_url : userInfo.image_url
+  });  
+  } catch (error) {
+    console.log(error);
+  }}
+  const validateData = () : void => {
+  const {firstnameValidation,lastnameValidation,birthdateValidation,
+  emailValidation,pwdValidation} = validatePersonalInfo(userInfo);
+  setValidation({...validation,
+    firstname : firstnameValidation,
+    lastname : lastnameValidation,
+    birthday : birthdateValidation,
+    email : emailValidation,
+    password : pwdValidation
+  });
+  }
+  const confirmValidation = () : boolean => {
+    const allValid : boolean = checkAllTrue(validation);
+    const validateStartDay : boolean = validateStartDate(userInfo.start_day);
+    setStartDate(validateStartDay);
+    return allValid && validateStartDay;
+  }
   const checkData = async () => {
-  
+  validateData();
+  if (confirmValidation()){
+    console.log('valid');
+    //await addEmployee();
+    //setAddEmp(false);
+  }
+  else
+  console.log('invalid');
   }
   useEffect(() => {
   fetchWorkChoises();
@@ -235,7 +261,7 @@ function AddEmployee() {
     <tr>
     <td className="py-2">
     <label htmlFor="startDate" 
-    className={`text-[18px] mr-4`}>start date</label>
+    className={`text-[18px] mr-4 ${!startDate && 'text-red-600'}`}>start date</label>
     </td>
     <td className="py-2">
     <input type="date" id="startDate" className="bg-gray-200 py-2 px-4 rounded-md"
@@ -258,7 +284,7 @@ function AddEmployee() {
     </div>
     <div className="flex gap-8 justify-center mt-6">
         <button className="py-2 px-4 capitalize bg-green-700 mr-6 rounded-md text-white 
-        duration-300 hover:bg-green-800">
+        duration-300 hover:bg-green-800" onClick={(e) => checkData()}>
             add employee
         </button>
         <button onClick={(e) => setAddEmp(false)} className="py-2 px-4 capitalize bg-gray-300 rounded-md

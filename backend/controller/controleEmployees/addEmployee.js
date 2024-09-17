@@ -4,7 +4,8 @@ import bcrypt from 'bcrypt';
 
 const addEmployee = async (req, res) => {
     try {
-        const { firstname, lastname, sex, birthDay, email, password, mgrID, branchID, roleID, startDay, salary,image_url } = req.body;
+        const { firstname, lastname, sex, birthDay, email, password, mgrID, branchID,
+            roleID, startDay, salary,image_url } = req.body;
         if (!firstname || !lastname || !sex || !birthDay || !salary ||
             !email || !password || !mgrID || !branchID || !roleID || !startDay)
             return res.status(400).json({ message: "all the information are required" });

@@ -27,3 +27,12 @@ export const validateBirthDate = (date : string) : boolean => {
     diffYears--;
     return diffYears >= 18;
 }
+
+export const validateStartDate = (date : string) : boolean => {
+    const givenDate : Date = new Date(date);
+    const now = new Date();
+    const diffYears : number = now.getFullYear() - givenDate.getFullYear();
+    const diffMounth : number = now.getMonth() - givenDate.getMonth();
+    const diffDay : number = now.getDate() - givenDate.getDate();
+    return diffYears >= 0 && diffMounth >= 0 && diffDay >= 0;
+}

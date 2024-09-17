@@ -16,7 +16,7 @@ employeesRouter.get('/get_all',handlJWT,handlRoles(requirementRoles.role_id),get
 employeesRouter.get('/get_employee',handlJWT,handlRoles(requirementRoles.role_id),getEmployee);
 employeesRouter.get('/get_managers',handlJWT,handlRoles(requirementRoles.role_id),getManagers);
 employeesRouter.delete('/delete',handlJWT,handlRoles(requirementRoles.role_id),deleteEmployee);
-employeesRouter.post('/add',handlJWT,handlRoles(requirementRoles.role_id),addEmployee);
+employeesRouter.post('/add_employee',handlJWT,handlRoles(requirementRoles.role_id),addEmployee);
 employeesRouter.put('/update',handlJWT,handlRoles(requirementRoles.role_id),addEmployee);
 employeesRouter.put('/modify',handlJWT,makeMofications);
 
