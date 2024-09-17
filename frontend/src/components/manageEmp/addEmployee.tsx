@@ -36,6 +36,7 @@ function AddEmployee() {
   const [addEmp,setAddEmp] = useState<boolean>(false);
   const [branches,setBranches] = useState<branch[]>([branchInit]);
   const [roles,setRoles] = useState<role[]>([roleInit]);
+  const [managers,setManagers] = useState<{super_id : number}[]>([{super_id : 0}]);
   // fetch data
   const fetchWorkChoises = async () => {
     try {
@@ -43,6 +44,8 @@ function AddEmployee() {
         setBranches(branchResponse.data.branches);
         const roleResponse = await axios.get(`http://localhost:${port}/role/roleList`);
         setRoles(roleResponse.data.rolesList);
+        const managersResponse = await axios.get(`http://localhost:${port}/employees/get_managers`);
+        setManagers(managersResponse.data.managers);
     } catch (error) {
         console.log(error);
     }
@@ -61,7 +64,7 @@ function AddEmployee() {
     </div>
     {addEmp &&
     <div className="w-fit mx-auto mt-10">
-    <div className="flex flex-wrap gap-6 md:gap-14">
+    <div className="flex flex-wrap gap-6 md:gap-24">
     <div>
     <div className="capitalize text-xl font-semibold mb-4">
     personal information
@@ -156,7 +159,7 @@ function AddEmployee() {
     </div>
     <table>
     <colgroup>
-        <col span={1} className="w-[50px]"/>
+        <col span={1} className="w-[100px]"/>
         <col span={1} className="w-[120px]"/>
     </colgroup>
     <tbody>
@@ -192,6 +195,42 @@ function AddEmployee() {
     )
     })}
     </select>
+    </td>
+    </tr>
+    <tr>
+    <td className="py-2">
+    <label htmlFor="mgrID" 
+    className={`text-[18px] mr-4`}>manager id</label>
+    </td>
+    <td className="py-2">
+    <select id="mgrID" className="bg-gray-200 py-2 px-4 rounded-md">
+    {managers.map((ele : {super_id : number}) => {
+        return (
+            <option value={ele.super_id} key={ele.super_id}>
+                {ele.super_id}
+            </option>
+        )
+    })}
+    </select>
+    </td>
+    </tr>
+    <tr>
+    <td className="py-2">
+    <label htmlFor="startDate" 
+    className={`text-[18px] mr-4`}>start date</label>
+    </td>
+    <td className="py-2">
+    <input type="date" id="startDate" className="bg-gray-200 py-2 px-4 rounded-md"/>
+    </td>
+    </tr>
+    <tr>
+    <td className="py-2">
+    <label htmlFor="salary" 
+    className={`text-[18px] mr-4`}>salary</label>
+    </td>
+    <td className="py-2">
+    <input type="number" id="salary" className="bg-gray-200 py-2 px-4 rounded-md" 
+    placeholder="algerian dinar AD"/>
     </td>
     </tr>
     </tbody>
