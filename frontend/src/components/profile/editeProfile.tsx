@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import employee from "../../interfaces/employee";
-import { validateBirthDate, validateEmail, validateNames, validatePWD } from "../../config/validation";
 import { inputFormat } from "../../utils/date";
 import axios from "axios";
+import validatePersonalInfo from "../../config/validateEmployeeInfo";
+import checkAllTrue from "../../config/checkAllTrue";
 
 function EditeProfile({employee} : {employee : employee}){
   const [edit,setEdit] = useState(false);
@@ -19,11 +20,8 @@ function EditeProfile({employee} : {employee : employee}){
     password : true
     });
   const validateInfo = () : void => {
-    const firstnameValidation : boolean = validateNames(userInfo.firstname);
-    const lastnameValidation : boolean = validateNames(userInfo.lastname);
-    const birthdateValidation : boolean = validateBirthDate(userInfo.birthday);
-    const emailValidation : boolean = validateEmail(userInfo.email);
-    const pwdValidation : boolean = validatePWD(userInfo.password);
+    const {firstnameValidation,lastnameValidation,birthdateValidation,
+    emailValidation,pwdValidation} = validatePersonalInfo(userInfo);
     setValidation({...validation,
     firstname : firstnameValidation,
     lastname : lastnameValidation,
@@ -33,14 +31,10 @@ function EditeProfile({employee} : {employee : employee}){
   });
   }
   const checkChanging = () : boolean => {
-    let validInfo = true;
-    for (let info in validation){
-      if (!info){
-        validInfo = false;
-        break;
-      }
-    }
-    return validInfo && (userInfo === employee || userInfo.password !== employee.password);
+    const validInfo = checkAllTrue(validation);
+    return validInfo && (userInfo.firstname !== employee.firstname || userInfo.lastname !== employee.lastname
+    || userInfo.sex !== employee.sex || userInfo.birthday !== employee.birthday ||
+    userInfo.email !== employee.email);
   }
   const sendData = async () => {
   try {
@@ -62,11 +56,11 @@ function EditeProfile({employee} : {employee : employee}){
   }
   const putData = async () => {
     validateInfo();
-    if (checkChanging())
-      await sendData();
-    setEdit(false);
+    if (checkChanging()){
+    await sendData();
+    setEdit(false); 
+    }
   }
-
   return (
     <div className="w-fit mx-auto mt-8">
        <div className="w-fit mx-auto mt-6 mb-2">

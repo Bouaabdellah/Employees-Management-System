@@ -40,16 +40,31 @@ function AddEmployee() {
   // fetch data
   const fetchWorkChoises = async () => {
     try {
+        let defaultBranch : number = 0,
+        defaultRole : number = 0,
+        defaultManager : number = 0;
         const branchResponse = await axios.get(`http://localhost:${port}/branch/get_all`);
         setBranches(branchResponse.data.branches);
+        if (branchResponse.data.branches.length)
+          defaultBranch = branchResponse.data.branches[0].branch_id;   
         const roleResponse = await axios.get(`http://localhost:${port}/role/roleList`);
         setRoles(roleResponse.data.rolesList);
+        if (roleResponse.data.rolesList.length)
+          defaultRole = roleResponse.data.rolesList[0].role_id;
         const managersResponse = await axios.get(`http://localhost:${port}/employees/get_managers`);
         setManagers(managersResponse.data.managers);
+        if (managersResponse.data.managers.length)
+          defaultManager = managersResponse.data.managers[0].super_id;
+        setUserInfo({...userInfo,branch_id : defaultBranch,
+            role_id : defaultRole, super_id : defaultManager
+        });
     } catch (error) {
         console.log(error);
     }
     }
+  const checkData = async () => {
+  
+  }
   useEffect(() => {
   fetchWorkChoises();
   },[]);
@@ -169,7 +184,8 @@ function AddEmployee() {
     className={`text-[18px] mr-4`}>branch</label>
     </td>
     <td className="py-2">
-    <select id="branch" className="bg-gray-200 py-2 px-4 rounded-md">
+    <select id="branch" className="bg-gray-200 py-2 px-4 rounded-md"
+    onChange={(e) => setUserInfo({...userInfo,branch_id : +e.target.value})}>
     {branches.map((ele : branch) => {
     return(
     <option value={ele.branch_id} key={ele.branch_id}>
@@ -186,7 +202,8 @@ function AddEmployee() {
     className={`text-[18px] mr-4`}>role</label>
     </td>
     <td className="py-2">
-    <select id="role" className="bg-gray-200 py-2 px-4 rounded-md">
+    <select id="role" className="bg-gray-200 py-2 px-4 rounded-md"
+    onChange={(e) => setUserInfo({...userInfo,role_id : +e.target.value})}>
     {roles.map((ele : role) => {
     return(
     <option value={ele.role_id} key={ele.role_id}>
@@ -203,7 +220,8 @@ function AddEmployee() {
     className={`text-[18px] mr-4`}>manager id</label>
     </td>
     <td className="py-2">
-    <select id="mgrID" className="bg-gray-200 py-2 px-4 rounded-md">
+    <select id="mgrID" className="bg-gray-200 py-2 px-4 rounded-md"
+    onChange={(e) => setUserInfo({...userInfo,super_id : +e.target.value})}>
     {managers.map((ele : {super_id : number}) => {
         return (
             <option value={ele.super_id} key={ele.super_id}>
@@ -220,7 +238,8 @@ function AddEmployee() {
     className={`text-[18px] mr-4`}>start date</label>
     </td>
     <td className="py-2">
-    <input type="date" id="startDate" className="bg-gray-200 py-2 px-4 rounded-md"/>
+    <input type="date" id="startDate" className="bg-gray-200 py-2 px-4 rounded-md"
+    onChange={(e) => setUserInfo({...userInfo,start_day : e.target.value})}/>
     </td>
     </tr>
     <tr>
@@ -230,7 +249,7 @@ function AddEmployee() {
     </td>
     <td className="py-2">
     <input type="number" id="salary" className="bg-gray-200 py-2 px-4 rounded-md" 
-    placeholder="algerian dinar AD"/>
+    placeholder="algerian dinar AD" onChange={(e) => setUserInfo({...userInfo,salary : +e.target.value})}/>
     </td>
     </tr>
     </tbody>
