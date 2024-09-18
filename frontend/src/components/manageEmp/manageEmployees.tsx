@@ -6,7 +6,7 @@ function ManageEmployees() {
   return (
     <div className="py-12">
       <Container>
-        <SearchEmployees />
+        <SearchEmployees/>
         <AddEmployee/>
       </Container>
     </div>
