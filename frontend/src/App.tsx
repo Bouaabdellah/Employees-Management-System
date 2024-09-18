@@ -11,6 +11,8 @@ import { useLocation } from 'react-router-dom';
 import Dashboard from './components/utils/dashboard';
 import Sidebar from './components/utils/sidebar';
 import ManageEmployees from './components/manageEmp/manageEmployees';
+import ProfileInfo from './components/profile/profileInfo';
+import EmpProfile from './components/manageEmp/empProfile';
 
 function LocationWrapper() {
   const location = useLocation();
@@ -29,6 +31,7 @@ function LocationWrapper() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/manage-employees" element={<ManageEmployees />} />
+        <Route path='/employee_profile' element={<EmpProfile />}/>
       </Routes>
     </>
   );

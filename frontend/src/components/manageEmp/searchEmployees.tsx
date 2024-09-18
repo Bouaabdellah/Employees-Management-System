@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import employee, { userInfoInitialze } from "../../interfaces/employee";
+import employee from "../../interfaces/employee";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 function SearchEmployees() {
   const port = process.env.REACT_APP_server_port;
@@ -15,7 +16,7 @@ function SearchEmployees() {
   try {
     const response = await axios.get(`http://localhost:${port}/employees/get_employee`, {
         params: {
-          id: info.id,
+          id: info.id === 0 ? null : info.id,
           firstName : info.firstname,
           lastName : info.lastname
         },
@@ -28,12 +29,12 @@ function SearchEmployees() {
     setEmployees([]);
   } catch (error) {
     console.log(error);
+    setEmployees([]);
   }
   }
   useEffect(() => {
   getEmployees();
   },[info]);
-  console.log(employees);
   return (
     <div className="mb-6">
       <div className="mb-8">
@@ -56,19 +57,24 @@ function SearchEmployees() {
       <div className="text-xl py-2 px-3 bg-red-200 rounded-md text-red-600">
         There is no employee
       </div> : 
-      <div>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3">
       {employees.map((ele : employee) => {
         return (
-          <div className="flex gap-4">
+          <NavLink to={'/employee_profile'} state={ele}
+          className="flex gap-2 bg-custom-gradient py-2 pl-2 text-white rounded-md 
+          cursor-pointer duration-300 hover:text-green-300 capitalize"
+          key={ele.id}>
             <span>{ele.id}</span>
-            <span>{ele.firstname}</span>
-            <span>{ele.lastname}</span>
-          </div>
+            <span>{ele.firstname} {ele.lastname}</span>
+          </NavLink>
         )
       })}
       </div>}
       <div className="flex justify-center mt-6">
-      <button onClick={(e) => setSearch(false)} className="py-2 px-4 capitalize bg-gray-300 rounded-md
+      <button onClick={(e) => {
+       setSearch(false);
+       setEmployees([]); 
+      }} className="py-2 px-4 capitalize bg-gray-300 rounded-md
         duration-300 hover:bg-gray-400">
           cancel
       </button>
