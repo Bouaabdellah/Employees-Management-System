@@ -13,7 +13,7 @@ const employeesRouter = express.Router();
 const requirementRoles = rolesList.find(ele => ele.role_name === 'admin');
 
 employeesRouter.get('/get_all',handlJWT,handlRoles(requirementRoles.role_id),getAllEmployees);
-employeesRouter.get('/get_employee',handlJWT,handlRoles(requirementRoles.role_id),getEmployee);
+employeesRouter.get('/get_employee',handlJWT,getEmployee);
 employeesRouter.get('/get_managers',handlJWT,handlRoles(requirementRoles.role_id),getManagers);
 employeesRouter.delete('/delete',handlJWT,handlRoles(requirementRoles.role_id),deleteEmployee);
 employeesRouter.post('/add_employee',handlJWT,handlRoles(requirementRoles.role_id),addEmployee);

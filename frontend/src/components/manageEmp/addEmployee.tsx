@@ -14,7 +14,10 @@ function AddEmployee() {
   // stats
   const [userInfo,setUserInfo] = useState<employee>(userInfoInitialze);
   const [validation,setValidation] = useState<personalInfo>(validationInitialze);
-  const [startDate,setStartDate] = useState<boolean>(true);
+  const [workInfo,setWorkInfo] = useState({
+    startDate : true,
+    salary : true
+  });
   const [addEmp,setAddEmp] = useState<boolean>(false);
   const [branches,setBranches] = useState<branch[]>([branchInit]);
   const [roles,setRoles] = useState<role[]>([roleInit]);
@@ -51,7 +54,7 @@ function AddEmployee() {
     firstname : userInfo.firstname,
     lastname : userInfo.lastname,
     sex : userInfo.sex,
-    birthdate : userInfo.birthday,
+    birthDay : userInfo.birthday,
     email : userInfo.email,
     password : userInfo.password,
     mgrID : userInfo.super_id,
@@ -64,7 +67,7 @@ function AddEmployee() {
   } catch (error) {
     console.log(error);
   }}
-  const validateData = () : void => {
+  const validateData = () => {
   const {firstnameValidation,lastnameValidation,birthdateValidation,
   emailValidation,pwdValidation} = validatePersonalInfo(userInfo);
   setValidation({...validation,
@@ -74,19 +77,24 @@ function AddEmployee() {
     email : emailValidation,
     password : pwdValidation
   });
+  return {firstnameValidation,lastnameValidation,birthdateValidation,
+    emailValidation,pwdValidation};
   }
-  const confirmValidation = () : boolean => {
-    const allValid : boolean = checkAllTrue(validation);
+  const confirmValidation = (validations : {}) : boolean => {
+    const allValid : boolean = checkAllTrue(validations);
     const validateStartDay : boolean = validateStartDate(userInfo.start_day);
-    setStartDate(validateStartDay);
-    return allValid && validateStartDay;
+    const validateSalary : boolean = userInfo.salary > 0;
+    setWorkInfo({...workInfo,
+      startDate : validateStartDay,
+      salary : validateSalary
+    });
+    return allValid && validateStartDay && validateSalary;
   }
   const checkData = async () => {
-  validateData();
-  if (confirmValidation()){
-    console.log('valid');
-    //await addEmployee();
-    //setAddEmp(false);
+  const validations = validateData();
+  if (confirmValidation(validations)){
+    await addEmployee();
+    setAddEmp(false);
   }
   else
   console.log('invalid');
@@ -261,7 +269,7 @@ function AddEmployee() {
     <tr>
     <td className="py-2">
     <label htmlFor="startDate" 
-    className={`text-[18px] mr-4 ${!startDate && 'text-red-600'}`}>start date</label>
+    className={`text-[18px] mr-4 ${!workInfo.startDate && 'text-red-600'}`}>start date</label>
     </td>
     <td className="py-2">
     <input type="date" id="startDate" className="bg-gray-200 py-2 px-4 rounded-md"
@@ -271,7 +279,7 @@ function AddEmployee() {
     <tr>
     <td className="py-2">
     <label htmlFor="salary" 
-    className={`text-[18px] mr-4`}>salary</label>
+    className={`text-[18px] mr-4 ${!workInfo.salary && 'text-red-600'}`}>salary</label>
     </td>
     <td className="py-2">
     <input type="number" id="salary" className="bg-gray-200 py-2 px-4 rounded-md" 

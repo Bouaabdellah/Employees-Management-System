@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import employee from "../../interfaces/employee";
 import { inputFormat } from "../../utils/date";
 import axios from "axios";
@@ -14,7 +14,7 @@ function EditeProfile({employee} : {employee : employee}){
     setUserInfo(employee);
   }, [employee]);
   const [validation,setValidation] = useState<personalInfo>(validationInitialze);
-  const validateInfo = () : void => {
+  const validateInfo = () => {
     const {firstnameValidation,lastnameValidation,birthdateValidation,
     emailValidation,pwdValidation} = validatePersonalInfo(userInfo);
     setValidation({...validation,
@@ -24,12 +24,14 @@ function EditeProfile({employee} : {employee : employee}){
     email : emailValidation,
     password : pwdValidation
   });
+    return {firstnameValidation,lastnameValidation,birthdateValidation,
+    emailValidation,pwdValidation};
   }
-  const checkChanging = () : boolean => {
-    const validInfo = checkAllTrue(validation);
+  const checkChanging = (validations : {}) : boolean => {
+    const validInfo = checkAllTrue(validations);
     return validInfo && (userInfo.firstname !== employee.firstname || userInfo.lastname !== employee.lastname
     || userInfo.sex !== employee.sex || userInfo.birthday !== employee.birthday ||
-    userInfo.email !== employee.email);
+    userInfo.email !== employee.email || userInfo.password !== '');
   }
   const sendData = async () => {
   try {
@@ -50,11 +52,13 @@ function EditeProfile({employee} : {employee : employee}){
   } 
   }
   const putData = async () => {
-    validateInfo();
-    if (checkChanging()){
+    const validations = validateInfo();
+    if (checkChanging(validations)){
     await sendData();
     setEdit(false); 
     }
+    else
+    console.log('invalid');
   }
   return (
     <div className="w-fit mx-auto mt-8">
