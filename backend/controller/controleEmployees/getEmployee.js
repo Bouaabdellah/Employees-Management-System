@@ -17,15 +17,16 @@ const getEmployee = async (req,res) => {
         ]);
         if (!employees.length)
             return res.status(200).json({message : "employee don 't exist"});
+        employees.map((ele) => {
         // convert birthdate from global date to local date
-        let date = new Date(employees[0].birthday);
+        let date = new Date(ele.birthday);
         let localDate = date.toLocaleDateString('en-US',{timeZone : 'Africa/Algiers'});
-        employees[0].birthday = localDate;
+        ele.birthday = localDate;
         // convert start date
-        date = new Date(employees[0].start_day);
+        date = new Date(ele.start_day);
         localDate = date.toLocaleDateString('en-US',{timeZone : 'Africa/Algiers'});
-        employees[0].start_day = localDate;
-
+        ele.start_day = localDate;    
+        });
         return res.status(200).json({message : "serche the employee with success", employees : employees});
     } catch (error) {
         console.log(error);

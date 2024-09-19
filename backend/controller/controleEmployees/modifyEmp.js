@@ -3,6 +3,7 @@ import pool from "../../utils/dbConnection.js";
 import bcrypt from 'bcrypt'
 
 const makeMofications = async (req,res) => {
+    try {
     const {firstname,lastname,sex,birthdate,email,password,id} = req.body;
     if (!firstname || !lastname || !sex || !birthdate || !email || !password || !id)
         return res.status(400).send({message : `don 't have required informations`});
@@ -18,7 +19,10 @@ const makeMofications = async (req,res) => {
         SET firstname=?, lastname=?, sex=?, birthday=?, email=?, user_password=?
         WHERE id=?
         `,[firstname,lastname,sex,birthdate,email,hashedPWD,id]);
-    return res.status(200).send({message : `modify profile with success`});
+    return res.status(200).send({message : `modify profile with success`});    
+    } catch (error) {
+     console.log(error);   
+    }
 }
 
 export default makeMofications;

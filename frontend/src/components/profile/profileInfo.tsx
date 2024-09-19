@@ -103,7 +103,7 @@ function ProfileInfo({userInfo} : {userInfo : employee}) {
                 salary :
               </span>
               <span className="text-blue-800 capitalize">
-                {userInfo.salary}$
+                {userInfo.salary} DA
               </span>
             </div>
           </div>
