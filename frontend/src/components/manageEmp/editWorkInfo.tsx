@@ -83,6 +83,17 @@ function EditWorkInfo({employee} : {employee : employee}) {
     setEdit(false);
    }
    }
+  const deleteEmployee = async () => {
+  try {
+  axios.delete(`http://localhost:${port}/employees/delete`,{
+    data : {
+    empID : workInfo.id    
+    }
+  }); 
+  } catch (error) {
+    console.log(error);
+  }
+  }
 
   return (
     <div className="mt-8">
@@ -92,7 +103,7 @@ function EditWorkInfo({employee} : {employee : employee}) {
         edit work information
         </button>
         <button className="capitalize py-2 px-4 text-white rounded-md
-        bg-red-600 duration-300 hover:bg-red-700">
+        bg-red-600 duration-300 hover:bg-red-700" onClick={(e) => deleteEmployee()}>
         delete employee
         </button>
     </div>
