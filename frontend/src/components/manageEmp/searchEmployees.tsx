@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import employee from "../../interfaces/employee";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import Employees from "./employees";
 
 function SearchEmployees() {
   const port = process.env.REACT_APP_server_port;
@@ -56,20 +56,7 @@ function SearchEmployees() {
       {!employees.length ? 
       <div className="text-xl py-2 px-3 bg-red-200 rounded-md text-red-600">
         There is no employee
-      </div> : 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3">
-      {employees.map((ele : employee) => {
-        return (
-          <NavLink to={'/employee_profile'} state={ele}
-          className="flex gap-2 bg-custom-gradient py-2 pl-2 text-white rounded-md 
-          cursor-pointer duration-300 hover:text-green-300 capitalize"
-          key={ele.id}>
-            <span>{ele.id}</span>
-            <span>{ele.firstname} {ele.lastname}</span>
-          </NavLink>
-        )
-      })}
-      </div>}
+      </div> : <Employees employees={employees}/>}
       <div className="flex justify-center mt-6">
       <button onClick={(e) => {
        setSearch(false);
