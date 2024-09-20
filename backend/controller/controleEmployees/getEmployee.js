@@ -1,4 +1,5 @@
 import pool from '../../utils/dbConnection.js';
+import localDate from '../../utils/localDate.js';
 
 const getEmployee = async (req,res) => {
     try {
@@ -17,15 +18,10 @@ const getEmployee = async (req,res) => {
         ]);
         if (!employees.length)
             return res.status(200).json({message : "employee don 't exist"});
+        // convert date to local date
         employees.map((ele) => {
-        // convert birthdate from global date to local date
-        let date = new Date(ele.birthday);
-        let localDate = date.toLocaleDateString('en-US',{timeZone : 'Africa/Algiers'});
-        ele.birthday = localDate;
-        // convert start date
-        date = new Date(ele.start_day);
-        localDate = date.toLocaleDateString('en-US',{timeZone : 'Africa/Algiers'});
-        ele.start_day = localDate;    
+        ele.birthday = localDate(ele.birthday);
+        ele.start_day = localDate(ele.start_day);    
         });
         return res.status(200).json({message : "serche the employee with success", employees : employees});
     } catch (error) {

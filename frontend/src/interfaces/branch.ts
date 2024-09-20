@@ -10,5 +10,13 @@ export const branchInit : branch = {
    mgr_id : 0,
    start_day : ''
 }
+export interface branchInfo{
+   name : string;
+   id : number;
+}
+export const branchInfoInit : branchInfo = {
+   name : '',
+   id : 0
+}
 
 export default branch;
