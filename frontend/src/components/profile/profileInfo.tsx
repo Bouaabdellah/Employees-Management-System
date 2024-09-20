@@ -1,4 +1,3 @@
-import React from 'react'
 import employee from '../../interfaces/employee'
 
 function ProfileInfo({userInfo} : {userInfo : employee}) {

@@ -16,7 +16,7 @@ function BranchInfo({branchInfo} : {branchInfo : branch}) {
     </div>
     <div>
     <span className="text-[18xp] capitalize font-semibold mr-2">manager :</span>
-    <span className="text-blue-800 capitalize">
+    <span className="text-blue-800">
     {branchInfo.mgr_id ? branchInfo.mgr_id : `don 't have a manager`}
     </span>
     </div>
