@@ -13,6 +13,7 @@ import Sidebar from './components/utils/sidebar';
 import ManageEmployees from './components/manageEmp/manageEmployees';
 import EmpProfile from './components/manageEmp/empProfile';
 import Branches from './components/branches/branches';
+import Branch from './components/branches/branch';
 
 function LocationWrapper() {
   const location = useLocation();
@@ -33,6 +34,7 @@ function LocationWrapper() {
         <Route path="/manage-employees" element={<ManageEmployees />} />
         <Route path='/employee_profile' element={<EmpProfile />}/>
         <Route path='/branches' element={<Branches/>}/>
+        <Route path='/branch_info' element={<Branch/>}/>
       </Routes>
     </>
   );

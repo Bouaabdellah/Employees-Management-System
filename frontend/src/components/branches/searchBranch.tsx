@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import branch,{ branchInfo, branchInfoInit } from "../../interfaces/branch";
 import axios from "axios";
+import DisplayBranches from "./displayBranches";
 
 
 function SearchBranch() {
@@ -27,10 +28,12 @@ function SearchBranch() {
   }
   }
   useEffect(() => {
+  if (branchInfo.name !== '' || branchInfo.id !== 0)
   getBranches();
+  else
+  setBranches([]);
   },[branchInfo]);
-  console.log(branches);
-  
+
   return (
     <div>
     <div className="mb-8">
@@ -52,7 +55,7 @@ function SearchBranch() {
     There is no branches
     </div> :
     <div>
-    hh
+    <DisplayBranches branches={branches}/>
     </div>}
     <div className="flex justify-center mt-6">
     <button onClick={(e) => {
