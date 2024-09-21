@@ -34,5 +34,6 @@ export const validateStartDate = (date : string) : boolean => {
     const diffYears : number = now.getFullYear() - givenDate.getFullYear();
     const diffMounth : number = now.getMonth() - givenDate.getMonth();
     const diffDay : number = now.getDate() - givenDate.getDate();
-    return diffYears >= 0 && diffMounth >= 0 && diffDay >= 0;
+    return (diffYears > 0 || (diffYears === 0 && diffMounth > 0) 
+    || (diffYears === 0 && diffMounth === 0 && diffDay >= 0));
 }

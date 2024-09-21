@@ -6,7 +6,7 @@ const updateBranch = async (req,res) => {
         const {branchID,branchName,startDay,mgrID} = req.body;
         // if the user don 't enter information
        if (!branchName || !mgrID || !startDay || !branchID)
-        return res.status(400).json({message : 'branch name and id and manager id and start date are required'});
+        return res.status(400).json({message : `don 't have required information`});
        // confirm that branch exist
        const existBranch = await exist('branch','branch_id',branchID);
         if (!existBranch)
