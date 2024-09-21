@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import branch from "../../interfaces/branch";
 import axios from "axios";
 import { inputFormat } from "../../utils/date";
 import { validateNames, validateStartDate } from "../../config/validation";
 import port from "../../utils/port";
+import { useSelector } from "react-redux";
+import rootState from "../../interfaces/rootState";
 
 function EditBranch({branchInfo} : {branchInfo : branch}) {
+  const managers = useSelector((state : rootState) => state.choises.managers);
   const [info,setInfo] = useState<branch>(branchInfo);
   const [edit,setEdit] = useState<boolean>(false);
-  const [managers,setManagers] = useState<{super_id : number}[]>([]);
   const [validation,setValidation] = useState<{name : boolean; launchDate : boolean}>({
     name : true,
     launchDate : true
   });
   const startDate = inputFormat(branchInfo.start_day);
-  // fetch managers
-  const getManagers = async () => {
-    try {
-    const managersResponse = await axios.get(`http://localhost:${port}/employees/get_managers`);
-    setInfo({...info,mgr_id : managersResponse.data.managers[0].super_id});
-    setManagers(managersResponse.data.managers);
-    } catch (error) {
-      console.log(error);
-      setManagers([]);  
-    }
-  }
   // validate before send data
   const validateInfo = () => {
   const validateName : boolean = validateNames(info.branch_name);
@@ -53,15 +44,27 @@ function EditBranch({branchInfo} : {branchInfo : branch}) {
     setEdit(false); 
     }
   }
-  useEffect(() => {
-    getManagers();
-  },[]);
+  const deleteBranch = async () => {
+  try {
+    axios.delete(`http://localhost:${port}/branch/delete`,{
+      data : {
+      branchID : info.branch_id  
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  }
 
   return (
-    <div className="w-fit mx-auto mt-8">
-    <div className="w-fit mx-auto mt-6 mb-2">
+    <div className="mt-8">
+    <div className="flex justify-between mb-8">
     <button className="capitalize py-2 px-4 bg-gray-300 rounded-md duration-300 hover:bg-gray-400"
     onClick={() => setEdit(!edit)}>edit branch</button>
+    <button className="capitalize py-2 px-4 text-white rounded-md
+      bg-red-600 duration-300 hover:bg-red-700" onClick={() => deleteBranch()}>
+      delete branch
+    </button>
     </div>
     {edit &&
     <div>
@@ -111,7 +114,7 @@ function EditBranch({branchInfo} : {branchInfo : branch}) {
     </tr>
     </tbody>
     </table>
-    <div className="flex gap-8 justify-center mt-6">
+    <div className="flex gap-8 mt-6">
     <button className="py-2 px-4 capitalize bg-green-700 mr-6 rounded-md text-white
     duration-300 hover:bg-green-800" onClick={() => sendData()}>
     save
