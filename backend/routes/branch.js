@@ -11,7 +11,7 @@ import getBranches from '../controller/controleBranches/getBranch.js';
 const branch = express.Router();
 const requirementRoles = rolesList.find(ele => ele.role_name === 'admin');
 
-branch.post('/add',handlJWT,handlRoles(requirementRoles.role_id),addBranch);
+branch.post('/add_branch',handlJWT,handlRoles(requirementRoles.role_id),addBranch);
 branch.delete('/delete',handlJWT,handlRoles(requirementRoles.role_id),deleteBranch);
 branch.put('/update',handlJWT,handlRoles(requirementRoles.role_id),updateBranch);
 branch.get('/get_all',handlJWT,handlRoles(requirementRoles.role_id),branchsList);

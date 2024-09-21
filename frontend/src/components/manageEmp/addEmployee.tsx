@@ -24,7 +24,7 @@ function AddEmployee() {
   // add new employee
   const addEmployee = async () => {
   try {
-  await axios.post(`http://localhost:${port}/employees/add_employee`,{
+  axios.post(`http://localhost:${port}/employees/add_employee`,{
     firstname : userInfo.firstname,
     lastname : userInfo.lastname,
     sex : userInfo.sex,

@@ -6,7 +6,7 @@ const addBranch = async (req,res) => {
        const {branchName,mgrID,startDay} = req.body;
        // if the user don 't enter information
        if (!branchName || !mgrID || !startDay)
-        return res.status(400).json({message : 'branch name and manager id and start date are required'});
+        return res.status(400).json({message : `don 't have required information`});
        // confirm that manager exist
        const existMGR = await exist('user','id',mgrID);
         if (!existMGR)

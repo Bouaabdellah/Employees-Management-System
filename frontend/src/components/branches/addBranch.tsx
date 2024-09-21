@@ -2,17 +2,41 @@ import { useState } from "react";
 import branch, { branchInit } from "../../interfaces/branch";
 import { useSelector } from "react-redux";
 import rootState from "../../interfaces/rootState";
-
+import { validateNames, validateStartDate } from "../../config/validation";
+import port from "../../utils/port";
+import axios from "axios";
 
 function AddBranch() {
-  const [info,setInfo] = useState<branch>(branchInit);
+  const managers = useSelector((state : rootState) => state.choises.managers);
+  const [info,setInfo] = useState<branch>({...branchInit,mgr_id : managers[0].super_id});
   const [add,setAdd] = useState<boolean>(false);
   const [validation,setValidation] = useState<{name : boolean; launchDate : boolean}>({
     name : true,
     launchDate : true
   });
-  const managers = useSelector((state : rootState) => state.choises.managers);
-  console.log(managers);
+  const checkData = () : boolean => {
+    const nameValidation = validateNames(info.branch_name);
+    const launchDateValidation = validateStartDate(info.start_day);
+    setValidation({...validation,
+      name : nameValidation,
+      launchDate : launchDateValidation
+    });
+    return nameValidation && launchDateValidation;
+  }
+  const sendData = async () => {
+  try {
+    if (checkData()){
+    axios.post(`http://localhost:${port}/branch/add_branch`,{
+    branchName : info.branch_name,
+    mgrID : info.mgr_id,
+    startDay : info.start_day
+    });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  setAdd(false); 
+  }
 
   return (
     <div>
@@ -23,7 +47,7 @@ function AddBranch() {
         </button>
     </div>
     {add &&
-    <div>
+    <div className="w-fit mx-auto mt-10">
     <table>
     <colgroup>
     <col span={1} className="w-[110px]"/>
@@ -72,7 +96,7 @@ function AddBranch() {
     </table>
     <div className="flex gap-8 justify-center mt-6">
     <button className="py-2 px-4 capitalize bg-green-700 mr-6 rounded-md text-white
-    duration-300 hover:bg-green-800">
+    duration-300 hover:bg-green-800" onClick={() => sendData()}>
     save
     </button>
     <button className="py-2 px-4 capitalize bg-gray-300 rounded-md
