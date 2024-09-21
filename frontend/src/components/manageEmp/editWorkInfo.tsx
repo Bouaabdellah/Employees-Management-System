@@ -2,11 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import workInfo from "../../interfaces/workInfo";
 import employee from "../../interfaces/employee";
-import branch, { branchInit } from "../../interfaces/branch";
-import role, { roleInit } from "../../interfaces/role";
+import branch from "../../interfaces/branch";
+import role from "../../interfaces/role";
 import { inputFormat } from "../../utils/date";
 import { validateStartDate } from "../../config/validation";
 import port from "../../utils/port";
+import { useSelector } from "react-redux";
+import rootState from "../../interfaces/rootState";
 
 function EditWorkInfo({employee} : {employee : employee}) {
   const startDate = inputFormat(employee.start_day);
@@ -23,36 +25,7 @@ function EditWorkInfo({employee} : {employee : employee}) {
     startDate : true,
     salary : true
   });
-  const [branches,setBranches] = useState<branch[]>([branchInit]);
-  const [roles,setRoles] = useState<role[]>([roleInit]);
-  const [managers,setManagers] = useState<{super_id : number}[]>([{super_id : 0}]);
-  const fetchWorkChoises = async () => {
-    try {
-        let defaultBranch : number = 0,
-        defaultRole : number = 0,
-        defaultManager : number = 0;
-        const branchResponse = await axios.get(`http://localhost:${port}/branch/get_all`);
-        setBranches(branchResponse.data.branches);
-        if (branchResponse.data.branches.length)
-          defaultBranch = branchResponse.data.branches[0].branch_id;   
-        const roleResponse = await axios.get(`http://localhost:${port}/role/roleList`);
-        setRoles(roleResponse.data.rolesList);
-        if (roleResponse.data.rolesList.length)
-          defaultRole = roleResponse.data.rolesList[0].role_id;
-        const managersResponse = await axios.get(`http://localhost:${port}/employees/get_managers`);
-        setManagers(managersResponse.data.managers);
-        if (managersResponse.data.managers.length)
-          defaultManager = managersResponse.data.managers[0].super_id;
-        setWorkInfo({...workInfo,branchID : defaultBranch,
-            roleID : defaultRole, mgrID : defaultManager
-        });
-    } catch (error) {
-        console.log(error);
-    }
-    }
-   useEffect(() => {
-    fetchWorkChoises();
-   },[]);
+  const {managers,branches,roles} = useSelector((state : rootState) => state.choises);
    const validateData = () : boolean => {
    const validateSalary : boolean = workInfo.salary > 0;
    const validateStartDay : boolean = validateStartDate(workInfo.startDate);

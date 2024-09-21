@@ -1,4 +1,5 @@
 import Container from "../utils/container";
+import AddBranch from "./addBranch";
 import AllBranches from "./allBranches";
 import SearchBranch from "./searchBranch";
 
@@ -9,6 +10,7 @@ function Branches() {
     <Container>
     <SearchBranch/>
     <AllBranches/>
+    <AddBranch/>
     </Container>
     </div>
   )

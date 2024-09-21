@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setusername,setRole_id, setID } from '../stores/userInfo';
 import port from "../utils/port";
+import { setBranches, setManagers, setRoles } from '../stores/choises';
 
 const Login = () => {
   axios.defaults.withCredentials = true;
@@ -25,7 +26,19 @@ const Login = () => {
    const setTerms = () => {
     setValues({...values,terms : !values.terms});
    }
-
+   // fetch managers
+  const getChoises = async () => {
+    try {
+    const managersResponse = await axios.get(`http://localhost:${port}/employees/get_managers`);
+    dispatch(setManagers(managersResponse.data.managers));
+    const roleResponse = await axios.get(`http://localhost:${port}/role/roleList`);
+    dispatch(setRoles(roleResponse.data.rolesList));
+    const branchResponse = await axios.get(`http://localhost:${port}/branch/get_all`);
+    dispatch(setBranches(branchResponse.data.branches));
+    } catch (error) {
+      console.log(error);
+    }
+  }
    // handle submits 
    const fetchLogin = async (email : string, pwd : string) => {
     try {
@@ -34,11 +47,13 @@ const Login = () => {
       password : pwd
     }).then((response) => {
     setInvalid(false);
+    // set user info store
     dispatch(setusername(`${response.data.firstname} ${response.data.lastname}`));
     dispatch(setRole_id(response.data.role_id));
     dispatch(setID(response.data.id));
     navigate('/home');
     });
+    await getChoises();
     } catch (error) {
       setInvalid(true);
     }
