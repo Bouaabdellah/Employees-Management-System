@@ -7,7 +7,8 @@ const getEmployee = async (req,res) => {
        if (!firstName && !lastName && !id)
         return res.status(400).json({message : "you need at least one index"}); 
        const [employees] = await pool.query(`
-        SELECT id,firstname,lastname,sex,email,birthday,start_day,salary,super_id,branch_id,role_id,image_url
+        SELECT id,firstname,lastname,sex,email,birthday,start_day,
+        salary,super_id,branch_id,role_id,image_url,is_manager
         FROM user
         WHERE (firstname LIKE ? OR ? IS NULL)
         AND (lastname LIKE ? OR ? IS NULL)

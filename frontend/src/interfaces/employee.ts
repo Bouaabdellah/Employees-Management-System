@@ -14,6 +14,7 @@ interface employee{
   branch_id : number;
   role_id : number;
   image_url : string | null;
+  is_manager : boolean;
 }
 export const userInfoInitialze : employee = {
   id : 0,
@@ -28,7 +29,8 @@ export const userInfoInitialze : employee = {
   super_id : 0,
   role_id : 0,
   branch_id : 0,
-  image_url : null
+  image_url : null,
+  is_manager : false
 };
 
 export default employee;

@@ -12,6 +12,7 @@ CREATE TABLE user(
     branch_id INT NOT NULL,
     role_id INT NOT NULL,
     image_url VARCHAR(255),
+    is_manager BOOLEAN,
     FOREIGN KEY(super_id) REFERENCES user(id) ON DELETE SET NULL,
     FOREIGN KEY(branch_id) REFERENCES branch(branch_id) ON DELETE SET NULL,
     FOREIGN KEY(role_id) REFERENCES roles(role_id) ON DELETE SET NULL,

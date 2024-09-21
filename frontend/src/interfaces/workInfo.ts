@@ -5,6 +5,7 @@ interface workInfo{
     mgrID : number;
     salary : number;
     startDate : string;
+    is_manager : boolean;
 }
 
 export default workInfo;

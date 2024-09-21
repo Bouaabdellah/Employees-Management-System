@@ -10,7 +10,7 @@ import port from "../../utils/port";
 import { useSelector } from "react-redux";
 import rootState from "../../interfaces/rootState";
 
-function EditWorkInfo({employee} : {employee : employee}) {
+function EditWorkInfo({employee} : {employee : employee}){
   const startDate = inputFormat(employee.start_day);
   const [edit,setEdit] = useState<boolean>(false);
   const [workInfo,setWorkInfo] = useState<workInfo>({
@@ -19,7 +19,8 @@ function EditWorkInfo({employee} : {employee : employee}) {
     roleID : employee.role_id,
     mgrID : employee.super_id,
     salary : employee.salary,
-    startDate : startDate
+    startDate : startDate,
+    is_manager : employee.is_manager
   });
   const [validate,setValidate] = useState({
     startDate : true,
@@ -35,7 +36,7 @@ function EditWorkInfo({employee} : {employee : employee}) {
    });
    const thereIsChange = (employee.salary !== workInfo.salary || employee.branch_id !== workInfo.branchID
     || employee.role_id !== workInfo.roleID || employee.super_id !== workInfo.mgrID ||
-    employee.start_day !== workInfo.startDate);
+    employee.start_day !== workInfo.startDate || employee.is_manager !== workInfo.is_manager);
    return validateSalary && validateStartDay && thereIsChange;
    }
    const sendData = async () => {
@@ -47,7 +48,8 @@ function EditWorkInfo({employee} : {employee : employee}) {
     roleID : workInfo.roleID,
     mgrID : workInfo.mgrID,
     startDate : workInfo.startDate,
-    salary : workInfo.salary
+    salary : workInfo.salary,
+    is_manager : workInfo.is_manager
    });
    setEdit(false);
    } 
@@ -67,7 +69,6 @@ function EditWorkInfo({employee} : {employee : employee}) {
     console.log(error);
   }
   }
-
   return (
     <div className="mt-8">
     <div className="flex justify-between mb-8">
@@ -84,7 +85,7 @@ function EditWorkInfo({employee} : {employee : employee}) {
     <div className="pl-2">
     <table>
     <colgroup>
-        <col span={1} className="w-[100px]"/>
+        <col span={1} className="w-[110px]"/>
         <col span={1} className="w-[120px]"/>
     </colgroup>
     <tbody>
@@ -163,14 +164,23 @@ function EditWorkInfo({employee} : {employee : employee}) {
     defaultValue={employee.salary}/>
     </td>
     </tr>
+    <tr className="py-2">
+      <td>
+        <label htmlFor="is_manager" className={`text-[18px] mr-4`}>is manager</label>
+      </td>
+      <td>
+        <input type="checkbox" id="is_manager" checked={workInfo.is_manager} 
+        onChange={() => setWorkInfo({...workInfo,is_manager : !workInfo.is_manager})}/>
+      </td>
+    </tr>
     </tbody>
     </table>
     <div className="flex gap-8 mt-6">
         <button className="py-2 px-4 capitalize bg-green-700 mr-6 rounded-md text-white 
-        duration-300 hover:bg-green-800" onClick={(e) => sendData()}>
+        duration-300 hover:bg-green-800" onClick={() => sendData()}>
             save
         </button>
-        <button onClick={(e) => setEdit(false)} className="py-2 px-4 capitalize bg-gray-300 rounded-md
+        <button onClick={() => setEdit(false)} className="py-2 px-4 capitalize bg-gray-300 rounded-md
         duration-300 hover:bg-gray-400">
             cancel
         </button>

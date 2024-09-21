@@ -3,8 +3,8 @@ import pool from "../../utils/dbConnection.js";
 
 const updateEmployee = async (req,res) => {
     try {
-    const {id,branchID,roleID,mgrID,startDate,salary} = req.body;
-    if (!id || !branchID || !roleID || !mgrID || !startDate || !salary)
+    const {id,branchID,roleID,mgrID,startDate,salary,is_manager} = req.body;
+    if (!id || !branchID || !roleID || !startDate || !salary || is_manager === undefined)
         return res.status(400).send({message : `don 't have required informations`});
     // check if employee exist
     const employee = await exist('user', 'id',id);
@@ -13,9 +13,9 @@ const updateEmployee = async (req,res) => {
     // modify work info
     await pool.query(`
         UPDATE user
-        SET branch_id=?, role_id=?, super_id=?, start_day=?, salary=?
+        SET branch_id=?, role_id=?, super_id=?, start_day=?, salary=?, is_manager=?
         WHERE id=?
-        `,[branchID,roleID,mgrID,startDate,salary,id]);    
+        `,[branchID,roleID,mgrID,startDate,salary,is_manager,id]);    
     } catch (error) {
      console.log(error);   
     }
