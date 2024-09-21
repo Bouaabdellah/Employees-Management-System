@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import employee from "../../interfaces/employee";
-import Employees from "./employees";
-import axios from "axios";
+import branch from "../../interfaces/branch";
+import DisplayBranches from "./displayBranches";
 import port from "../../utils/port";
+import axios from "axios";
 
-function AllEmployees() {
-  const [employees,setEmployees] = useState<employee[]>([]);
+function AllBranches() {
   const [display,setDisplay] = useState<boolean>(false);
-  const getEmployees = async () => {
+  const [branches,setBranches] = useState<branch[]>([]);
+  // fetch branches
+  const getBranches = async () => {
   try {
-  const response = await axios.get(`http://localhost:${port}/employees/get_all`);
-  setEmployees(response.data.employees);   
+  const response = await axios.get(`http://localhost:${port}/branch/get_all`);
+  setBranches(response.data.branches);  
   } catch (error) {
-  console.log(error);    
+  console.log(error);
+  setBranches([]);
   }
   }
   useEffect(() => {
-    getEmployees();
+    getBranches();
   },[]);
 
   return (
@@ -24,16 +26,16 @@ function AllEmployees() {
     <div className="mb-8">
     <button className="py-2 px-4 capitalize bg-green-700 mr-6 
     rounded-md text-white duration-300 hover:bg-green-800" onClick={(e) => setDisplay(true)}>
-    get all employees
+    get all branches
     </button>
     </div>
     {display &&
     <div>
-    {!employees.length ? 
+    {!branches.length ? 
     <div className="text-xl py-2 px-3 bg-red-200 rounded-md text-red-600">
-    There is no employee
+    There is no branch
     </div> : 
-    <Employees employees={employees}/>}
+    <DisplayBranches branches={branches}/>}
     <div className="flex justify-center mt-6">
     <button onClick={(e) => setDisplay(false)} className="py-2 px-4 capitalize bg-gray-300 rounded-md
     duration-300 hover:bg-gray-400">
@@ -46,4 +48,4 @@ function AllEmployees() {
   )
 }
 
-export default AllEmployees;
+export default AllBranches

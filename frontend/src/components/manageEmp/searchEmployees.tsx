@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import employee from "../../interfaces/employee";
 import axios from "axios";
 import Employees from "./employees";
+import port from "../../utils/port";
 
 function SearchEmployees() {
-  const port = process.env.REACT_APP_server_port;
   const [search,setSearch] = useState<boolean>(false);
   const [employees,setEmployees] = useState<employee[]>([]);
   const [info,setInfo] = useState({

@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import branch,{ branchInfo, branchInfoInit } from "../../interfaces/branch";
 import axios from "axios";
 import DisplayBranches from "./displayBranches";
-
+import port from "../../utils/port";
 
 function SearchBranch() {
-  const port = process.env.REACT_APP_server_port;
   const [branchInfo,setBranchInfo] = useState<branchInfo>(branchInfoInit);
   const [branches,setBranches] = useState<branch[]>([]);
   const [search,setSearch] = useState<boolean>(false);

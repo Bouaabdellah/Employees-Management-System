@@ -6,9 +6,9 @@ import branch, { branchInit } from "../../interfaces/branch";
 import role, { roleInit } from "../../interfaces/role";
 import { inputFormat } from "../../utils/date";
 import { validateStartDate } from "../../config/validation";
+import port from "../../utils/port";
 
 function EditWorkInfo({employee} : {employee : employee}) {
-  const port = process.env.REACT_APP_server_port;
   const startDate = inputFormat(employee.start_day);
   const [edit,setEdit] = useState<boolean>(false);
   const [workInfo,setWorkInfo] = useState<workInfo>({

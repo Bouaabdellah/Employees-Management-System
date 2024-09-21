@@ -5,6 +5,7 @@ import axios from "axios";
 import validatePersonalInfo from "../../config/validateEmployeeInfo";
 import checkAllTrue from "../../config/checkAllTrue";
 import personalInfo, { validationInitialze } from "../../interfaces/validation";
+import port from "../../utils/port";
 
 function EditeProfile({employee} : {employee : employee}){
   const [edit,setEdit] = useState(false);
@@ -35,7 +36,6 @@ function EditeProfile({employee} : {employee : employee}){
   }
   const sendData = async () => {
   try {
-    const port = process.env.REACT_APP_server_port;
     if (userInfo.birthday === employee.birthday)
       userInfo.birthday = inputFormat(userInfo.birthday);
     await axios.put(`http://localhost:${port}/employees/modify`,{

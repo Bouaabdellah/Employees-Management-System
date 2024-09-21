@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setusername,setRole_id, setID } from '../stores/userInfo';
+import port from "../utils/port";
 
 const Login = () => {
   axios.defaults.withCredentials = true;
@@ -28,7 +29,6 @@ const Login = () => {
    // handle submits 
    const fetchLogin = async (email : string, pwd : string) => {
     try {
-    const port = process.env.REACT_APP_server_port;
     await axios.post(`http://localhost:${port}/auth/login`,{
       email : email,
       password : pwd

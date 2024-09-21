@@ -6,13 +6,13 @@ import employee, { userInfoInitialze } from '../../interfaces/employee';
 import Container from '../utils/container';
 import EditeProfile from './editeProfile';
 import ProfileInfo from './profileInfo';
+import port from "../../utils/port";
 
 function Profile() {
   const id = useSelector((state: rootState) => state.userInformation.id);
   const [userInfo, setUserInfo] = useState<employee>(userInfoInitialze);
   useEffect(() => {
     const fetchData = async () => {
-      const port = process.env.REACT_APP_server_port;
       try {
         const response = await axios
           .get(`http://localhost:${port}/employees/get_employee`, {

@@ -3,9 +3,9 @@ import branch from "../../interfaces/branch";
 import axios from "axios";
 import { inputFormat } from "../../utils/date";
 import { validateNames, validateStartDate } from "../../config/validation";
+import port from "../../utils/port";
 
 function EditBranch({branchInfo} : {branchInfo : branch}) {
-  const port = process.env.REACT_APP_server_port;
   const [info,setInfo] = useState<branch>(branchInfo);
   const [edit,setEdit] = useState<boolean>(false);
   const [managers,setManagers] = useState<{super_id : number}[]>([]);

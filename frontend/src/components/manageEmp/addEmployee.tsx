@@ -7,8 +7,7 @@ import validatePersonalInfo from "../../config/validateEmployeeInfo";
 import personalInfo, { validationInitialze } from "../../interfaces/validation";
 import checkAllTrue from "../../config/checkAllTrue";
 import { validateStartDate } from "../../config/validation";
-
-const port = process.env.REACT_APP_server_port;
+import port from "../../utils/port";
 
 function AddEmployee() {
   // stats
