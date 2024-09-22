@@ -13,14 +13,17 @@ import rootState from "../../interfaces/rootState";
 
 function AddEmployee() {
   // stats
-  const [userInfo,setUserInfo] = useState<employee>(userInfoInitialze);
+  const {managers,branches,roles} = useSelector((state : rootState) => state.choises);
+  const [userInfo,setUserInfo] = useState<employee>({...userInfoInitialze,
+    super_id : managers[0].super_id,
+    branch_id : branches[0].branch_id,
+    role_id : roles[0].role_id});
   const [validation,setValidation] = useState<personalInfo>(validationInitialze);
   const [workInfo,setWorkInfo] = useState({
     startDate : true,
     salary : true
   });
   const [addEmp,setAddEmp] = useState<boolean>(false);
-  const {managers,branches,roles} = useSelector((state : rootState) => state.choises);
   // add new employee
   const addEmployee = async () => {
   try {
@@ -36,7 +39,8 @@ function AddEmployee() {
     roleID : userInfo.role_id,
     startDay : userInfo.start_day,
     salary : userInfo.salary,
-    image_url : userInfo.image_url
+    image_url : userInfo.image_url,
+    is_manager : userInfo.is_manager
   });  
   } catch (error) {
     console.log(error);
@@ -256,6 +260,15 @@ function AddEmployee() {
     <input type="number" id="salary" className="bg-gray-200 py-2 px-4 rounded-md" 
     placeholder="algerian dinar AD" onChange={(e) => setUserInfo({...userInfo,salary : +e.target.value})}/>
     </td>
+    </tr>
+    <tr className="py-2">
+      <td>
+        <label htmlFor="is_manager" className={`text-[18px] mr-4`}>is manager</label>
+      </td>
+      <td>
+        <input type="checkbox" id="is_manager"
+        onChange={() => setUserInfo({...userInfo,is_manager : !userInfo.is_manager})}/>
+      </td>
     </tr>
     </tbody>
     </table>
