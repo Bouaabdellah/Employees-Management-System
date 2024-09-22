@@ -96,10 +96,10 @@ function EditWorkInfo({employee} : {employee : employee}){
     </td>
     <td className="py-2">
     <select id="branch" className="bg-gray-200 py-2 px-4 rounded-md"
-    onChange={(e) => setWorkInfo({...workInfo,branchID : +e.target.value})} defaultValue={employee.branch_id}>
+    onChange={(e) => setWorkInfo({...workInfo,branchID : +e.target.value})}>
     {branches.map((ele : branch) => {
     return(
-    <option value={ele.branch_id} key={ele.branch_id}>
+    <option value={ele.branch_id} key={ele.branch_id} selected={ele.branch_id === employee.branch_id}>
     {ele.branch_name}
     </option>    
     )
@@ -114,10 +114,10 @@ function EditWorkInfo({employee} : {employee : employee}){
     </td>
     <td className="py-2">
     <select id="role" className="bg-gray-200 py-2 px-4 rounded-md"
-    onChange={(e) => setWorkInfo({...workInfo,roleID : +e.target.value})} defaultValue={employee.role_id}>
+    onChange={(e) => setWorkInfo({...workInfo,roleID : +e.target.value})}>
     {roles.map((ele : role) => {
     return(
-    <option value={ele.role_id} key={ele.role_id}>
+    <option value={ele.role_id} key={ele.role_id} selected={ele.role_id === employee.role_id}>
     {ele.role_name}
     </option>    
     )
