@@ -3,8 +3,8 @@ import localDate from '../../utils/localDate.js';
 
 const getEmployee = async (req,res) => {
     try {
-       const {firstName,lastName,id} = req.query;
-       if (!firstName && !lastName && !id)
+       const {firstName,lastName,id,branchID,roleID,mgrID} = req.query;
+       if (!firstName && !lastName && !id && !branchID && !roleID && !mgrID)
         return res.status(400).json({message : "you need at least one index"}); 
        const [employees] = await pool.query(`
         SELECT id,firstname,lastname,sex,email,birthday,start_day,
@@ -13,10 +13,11 @@ const getEmployee = async (req,res) => {
         WHERE (firstname LIKE ? OR ? IS NULL)
         AND (lastname LIKE ? OR ? IS NULL)
         AND (id LIKE ? OR ? IS NULL)
-        `,[`${firstName || ''}%`,firstName,
-        `${lastName || ''}%`,lastName,
-        id,id
-        ]);
+        AND (branch_id LIKE ? OR ? IS NULL)
+        AND (role_id LIKE ? OR ? IS NULL)
+        AND (super_id LIKE ? OR ? IS NULL)
+        `,[`${firstName || ''}%`,firstName,`${lastName || ''}%`,lastName,
+        id,id,branchID,branchID,roleID,roleID,mgrID,mgrID]);
         if (!employees.length)
             return res.status(200).json({message : "employee don 't exist"});
         // convert date to local date
