@@ -77,8 +77,8 @@ function ProfileInfo({userInfo} : {userInfo : employee}) {
               <span className="text-[18xp] capitalize font-semibold mr-2">
                 manager ID :
               </span>
-              <span className="text-blue-800 capitalize">
-                {userInfo.super_id}
+              <span className="text-blue-800">
+                {userInfo.super_id ? userInfo.super_id : `don 't have a manager`}
               </span>
             </div>
             <div>

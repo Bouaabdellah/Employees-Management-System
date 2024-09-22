@@ -34,7 +34,7 @@ function AddEmployee() {
     birthDay : userInfo.birthday,
     email : userInfo.email,
     password : userInfo.password,
-    mgrID : userInfo.super_id,
+    mgrID : userInfo.super_id ? userInfo.super_id : null,
     branchID : userInfo.branch_id,
     roleID : userInfo.role_id,
     startDay : userInfo.start_day,
@@ -238,6 +238,7 @@ function AddEmployee() {
             </option>
         )
     })}
+    <option value="0">none</option>
     </select>
     </td>
     </tr>

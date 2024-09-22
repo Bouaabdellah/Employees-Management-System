@@ -46,7 +46,7 @@ function EditWorkInfo({employee} : {employee : employee}){
     id : workInfo.id,
     branchID : workInfo.branchID,
     roleID : workInfo.roleID,
-    mgrID : workInfo.mgrID,
+    mgrID : workInfo.mgrID ? workInfo.mgrID : null,
     startDate : workInfo.startDate,
     salary : workInfo.salary,
     is_manager : workInfo.is_manager
@@ -132,14 +132,15 @@ function EditWorkInfo({employee} : {employee : employee}){
     </td>
     <td className="py-2">
     <select id="mgrID" className="bg-gray-200 py-2 px-4 rounded-md"
-    onChange={(e) => setWorkInfo({...workInfo,mgrID : +e.target.value})} defaultValue={employee.super_id}>
+    onChange={(e) => setWorkInfo({...workInfo,mgrID : +e.target.value})}>
     {managers.map((ele : {super_id : number}) => {
         return (
-            <option value={ele.super_id} key={ele.super_id}>
+            <option value={ele.super_id} key={ele.super_id} selected={ele.super_id === employee.super_id}>
                 {ele.super_id}
             </option>
         )
     })}
+    <option value="0" selected={!employee.super_id}>none</option>
     </select>
     </td>
     </tr>
