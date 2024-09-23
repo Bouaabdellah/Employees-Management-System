@@ -47,13 +47,14 @@ function AddEmployee() {
   }}
   const validateData = () => {
   const {firstnameValidation,lastnameValidation,birthdateValidation,
-  emailValidation,pwdValidation} = validatePersonalInfo(userInfo);
+  emailValidation,pwdValidation,imageValidation} = validatePersonalInfo(userInfo);
   setValidation({...validation,
     firstname : firstnameValidation,
     lastname : lastnameValidation,
     birthday : birthdateValidation,
     email : emailValidation,
-    password : pwdValidation
+    password : pwdValidation,
+    image : imageValidation
   });
   return {firstnameValidation,lastnameValidation,birthdateValidation,
     emailValidation,pwdValidation};
@@ -74,8 +75,6 @@ function AddEmployee() {
     await addEmployee();
     setAddEmp(false);
   }
-  else
-  console.log('invalid');
   }
 
   return (
@@ -169,7 +168,7 @@ function AddEmployee() {
         className={`text-[18px] mr-4 ${!validation.image && 'text-red-600'}`}>image</label>
         </td>
         <td className="py-2">
-        <input type="url" id="image" className="bg-gray-200 py-2 px-4 rounded-md"
+        <input type="file" id="image" className="bg-gray-200 py-2 px-4 rounded-md"
         onChange={(e) => setUserInfo({...userInfo,image_url : e.target.value})}
         autoComplete="off" placeholder="image..."/>
         </td>

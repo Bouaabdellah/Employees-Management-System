@@ -17,13 +17,14 @@ function EditeProfile({employee} : {employee : employee}){
   const [validation,setValidation] = useState<personalInfo>(validationInitialze);
   const validateInfo = () => {
     const {firstnameValidation,lastnameValidation,birthdateValidation,
-    emailValidation,pwdValidation} = validatePersonalInfo(userInfo);
+    emailValidation,pwdValidation,imageValidation} = validatePersonalInfo(userInfo);
     setValidation({...validation,
     firstname : firstnameValidation,
     lastname : lastnameValidation,
     birthday : birthdateValidation,
     email : emailValidation,
-    password : pwdValidation
+    password : pwdValidation,
+    image : imageValidation
   });
     return {firstnameValidation,lastnameValidation,birthdateValidation,
     emailValidation,pwdValidation};
@@ -32,7 +33,7 @@ function EditeProfile({employee} : {employee : employee}){
     const validInfo = checkAllTrue(validations);
     return validInfo && (userInfo.firstname !== employee.firstname || userInfo.lastname !== employee.lastname
     || userInfo.sex !== employee.sex || userInfo.birthday !== employee.birthday ||
-    userInfo.email !== employee.email || userInfo.password !== '');
+    userInfo.email !== employee.email);
   }
   const sendData = async () => {
   try {
@@ -57,9 +58,8 @@ function EditeProfile({employee} : {employee : employee}){
     await sendData();
     setEdit(false); 
     }
-    else
-    console.log('invalid');
   }
+
   return (
     <div className="w-fit mx-auto mt-8">
        <div className="w-fit mx-auto mt-6 mb-2">
@@ -134,6 +134,17 @@ function EditeProfile({employee} : {employee : employee}){
         <td className="py-2">
         <input type="password" id="pwd" className="bg-gray-200 py-2 px-4 rounded-md"
         onChange={(e) => setUserInfo({...userInfo,password : e.target.value})}/>
+        </td>
+        </tr>
+        <tr>
+        <td className="py-2">
+        <label htmlFor="image" 
+        className={`text-[18px] mr-4 ${!validation.image && 'text-red-600'}`}>image</label>
+        </td>
+        <td className="py-2">
+        <input type="file" id="image" className="bg-gray-200 py-2 px-4 rounded-md"
+        onChange={(e) => setUserInfo({...userInfo,image_url : e.target.value})}
+        autoComplete="off" placeholder="image..."/>
         </td>
         </tr>    
         </tbody>

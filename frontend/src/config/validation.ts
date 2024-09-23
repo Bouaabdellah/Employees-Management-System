@@ -37,3 +37,11 @@ export const validateStartDate = (date : string) : boolean => {
     return (diffYears > 0 || (diffYears === 0 && diffMounth > 0) 
     || (diffYears === 0 && diffMounth === 0 && diffDay >= 0));
 }
+
+export const validateImage = (file : string | null) : boolean => {
+    if (!file)
+    return true;
+    const allowedTypes = ['jpeg', 'png','jpg'];
+    const extension = (file.split('.')[1]);
+    return allowedTypes.indexOf(extension) !== -1;
+}

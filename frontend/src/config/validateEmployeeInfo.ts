@@ -1,5 +1,5 @@
 import employee from "../interfaces/employee";
-import { validateBirthDate, validateEmail, validateNames, validatePWD } from "./validation";
+import { validateBirthDate, validateEmail, validateImage, validateNames, validatePWD } from "./validation";
 
 const validatePersonalInfo = (userInfo : employee) => {
     const firstnameValidation : boolean = validateNames(userInfo.firstname);
@@ -7,7 +7,9 @@ const validatePersonalInfo = (userInfo : employee) => {
     const birthdateValidation : boolean = validateBirthDate(userInfo.birthday);
     const emailValidation : boolean = validateEmail(userInfo.email);
     const pwdValidation : boolean = validatePWD(userInfo.password);
-    return {firstnameValidation,lastnameValidation,birthdateValidation,emailValidation,pwdValidation};
+    const imageValidation : boolean = validateImage(userInfo.image_url);
+    return {firstnameValidation,lastnameValidation,birthdateValidation,
+    emailValidation,pwdValidation,imageValidation};
 }
 
 export default validatePersonalInfo;
