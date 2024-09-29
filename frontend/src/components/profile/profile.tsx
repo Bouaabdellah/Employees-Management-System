@@ -31,9 +31,6 @@ function Profile() {
     };
     fetchData();
   }, []);
-  const username = useSelector(
-    (state: rootState) => state.userInformation.username,
-  );
 
   return (
     <div className="py-12">
