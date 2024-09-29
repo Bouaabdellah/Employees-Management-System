@@ -39,7 +39,6 @@ function AddEmployee() {
     roleID : userInfo.role_id,
     startDay : userInfo.start_day,
     salary : userInfo.salary,
-    image_url : userInfo.image_url,
     is_manager : userInfo.is_manager
   });  
   } catch (error) {
@@ -47,14 +46,13 @@ function AddEmployee() {
   }}
   const validateData = () => {
   const {firstnameValidation,lastnameValidation,birthdateValidation,
-  emailValidation,pwdValidation,imageValidation} = validatePersonalInfo(userInfo);
+  emailValidation,pwdValidation} = validatePersonalInfo(userInfo);
   setValidation({...validation,
     firstname : firstnameValidation,
     lastname : lastnameValidation,
     birthday : birthdateValidation,
     email : emailValidation,
-    password : pwdValidation,
-    image : imageValidation
+    password : pwdValidation
   });
   return {firstnameValidation,lastnameValidation,birthdateValidation,
     emailValidation,pwdValidation};
@@ -160,17 +158,6 @@ function AddEmployee() {
         <input type="password" id="pwd" className="bg-gray-200 py-2 px-4 rounded-md"
         onChange={(e) => setUserInfo({...userInfo,password : e.target.value})}
         autoComplete="off" placeholder="password..."/>
-        </td>
-        </tr>   
-        <tr>
-        <td className="py-2">
-        <label htmlFor="image" 
-        className={`text-[18px] mr-4 ${!validation.image && 'text-red-600'}`}>image</label>
-        </td>
-        <td className="py-2">
-        <input type="file" id="image" className="bg-gray-200 py-2 px-4 rounded-md"
-        onChange={(e) => setUserInfo({...userInfo,image_url : e.target.value})}
-        autoComplete="off" placeholder="image..."/>
         </td>
         </tr> 
         </tbody>
