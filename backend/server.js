@@ -6,6 +6,12 @@ import employeesRouter from './routes/employees.js';
 import corsOptions from './config/cors.js';
 import cookieParser from 'cookie-parser';
 import role from './routes/role.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import handleJWT from './middleware/verifyJWT.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.port;
@@ -20,6 +26,7 @@ app.use('/auth',loginRouter);
 app.use('/branch',branch);
 app.use('/employees',employeesRouter);
 app.use('/role',role);
+app.use('/images',handleJWT,express.static(path.join(__dirname,'puplic/imgs')));
 
 
 app.listen(port, () => {

@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import employee from '../../interfaces/employee'
 
 function ProfileInfo({userInfo} : {userInfo : employee}) {
+  const port = process.env.REACT_APP_server_port;
+
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-8 bg-gray-200 p-8 rounded-lg">
           <div className="py-6 px-8 border border-solid border-gray-400 bg-white rounded-lg">
             <img
-              src=""
+              src={userInfo.image_url ? 
+              `http://localhost:${port}/images/${userInfo.image_url}` : ''}
               alt="avatar"
               className="bg-gray-600 rounded-full w-[100px] h-[100px] mb-2 mx-auto
       flex justify-center items-center text-white capitalize"
