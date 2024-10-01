@@ -10,6 +10,8 @@ import makeMofications from '../controller/controleEmployees/modifyEmp.js';
 import getManagers from '../controller/controleEmployees/getmanagers.js';
 import updateEmployee from '../controller/controleEmployees/updateEmployee.js';
 import upload from '../utils/upload.js';
+import verifyNewImage from '../middleware/verifyNewImage.js';
+import memoryUpload from '../utils/storeInMemory.js';
 
 const employeesRouter = express.Router();
 const requirementRoles = rolesList.find(ele => ele.role_name === 'admin');
@@ -20,6 +22,7 @@ employeesRouter.get('/get_managers',handlJWT,handlRoles(requirementRoles.role_id
 employeesRouter.delete('/delete',handlJWT,handlRoles(requirementRoles.role_id),deleteEmployee);
 employeesRouter.post('/add_employee',handlJWT,handlRoles(requirementRoles.role_id),addEmployee);
 employeesRouter.put('/update',handlJWT,handlRoles(requirementRoles.role_id),updateEmployee);
-employeesRouter.put('/modify',handlJWT,upload.single('file'),makeMofications);
+employeesRouter.put('/modify',handlJWT,memoryUpload.single('file'),
+verifyNewImage,upload,makeMofications);
 
 export default employeesRouter;

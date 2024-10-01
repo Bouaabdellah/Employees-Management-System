@@ -58,8 +58,8 @@ function EditeProfile({employee} : {employee : employee}){
   const putData = async () => {
     const validations = validateInfo();
     if (checkChanging(validations)){
-    await sendData();
     setEdit(false); 
+    await sendData();
     }
   }
 
@@ -149,7 +149,7 @@ function EditeProfile({employee} : {employee : employee}){
         <input type="file" id="image" className="bg-gray-200 py-2 px-4 rounded-md"
         onChange={(e) => {
          setFile(e.target.files ? e.target.files[0] : null);
-         setUserInfo({...userInfo,image_url : e.target.value}) 
+         setUserInfo({...userInfo,image_url : e.target.value}); 
         }}
         autoComplete="off" placeholder="image..." name="file"/>
         </td>

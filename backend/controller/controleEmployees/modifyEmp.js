@@ -1,6 +1,7 @@
+import path from "path";
 import exist from "../../config/exist.js";
 import pool from "../../utils/dbConnection.js";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 const makeMofications = async (req,res) => {
     try {
@@ -23,7 +24,8 @@ const makeMofications = async (req,res) => {
         `,[firstname,lastname,sex,birthdate,email,hashedPWD,image,userID]);
     return res.status(200).send({message : `modify profile with success`});    
     } catch (error) {
-     console.log(error);   
+    console.log(error);
+    return res.send(500).json({message : 'internal error'});   
     }
 }
 
