@@ -28,7 +28,6 @@ app.use('/employees',employeesRouter);
 app.use('/role',role);
 app.use('/images',handleJWT,express.static(path.join(__dirname,'puplic/imgs')));
 
-
 app.listen(port, () => {
     console.log(`connecting on the port ${port}...`);
 });
