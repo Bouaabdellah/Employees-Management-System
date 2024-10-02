@@ -1,6 +1,15 @@
+import { useNavigate } from "react-router-dom";
+import port from "../utils/port";
+import axios from 'axios';
 
 
 const Logout = ({setLogout} : {setLogout : Function}) => {
+    const navigate = useNavigate();
+    const logginjout = async () => {
+        await axios.post(`http://localhost:${port}/logout`);
+        navigate('/');
+    }
+
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-full">
     <div className="absolute top-0 left-0 w-full h-full bg-gray-800 opacity-30">
@@ -12,7 +21,7 @@ const Logout = ({setLogout} : {setLogout : Function}) => {
     </div>
     <div className="flex gap-10 mt-4">
     <button className="px-3 py-2 font-semibold bg-red-600 rounded-md hover:bg-red-700 duration-300
-    cursor-pointer text-white">
+    cursor-pointer text-white" onClick={() => logginjout()}>
     confirm
     </button>
     <button className="px-3 py-2 font-semibold bg-gray-300 rounded-md hover:bg-gray-400 duration-300

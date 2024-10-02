@@ -13,13 +13,13 @@ const handleJWT = async (req,res,next) => {
     if (notexistAccess && !refreshToken)
         return res.status(401).json({message : "unothorized you don 't have both of tokens"});
     if (notexistAccess && refreshToken){
-       const blRefreshToken = client.get('refreshToken');
+       const blRefreshToken = await client.get('refreshToken');
        if (refreshToken === blRefreshToken)
         return res.status(401).json({message : "you login out, refresh token is invalid"}); 
        accessToken = await refreshAccessToken(req,res); 
     }
     if (!notexistAccess){
-    const blAccessToken = client.get('accessToken');    
+    const blAccessToken = await client.get('accessToken');    
     if (accessToken === blAccessToken)
         return res.status(401).json({message : "you login out, access token is invalid"});
     }
