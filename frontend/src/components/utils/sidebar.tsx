@@ -10,12 +10,14 @@ import { FaCodeBranch } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { setSidebar } from '../../stores/sidebar';
+import Logout from '../logout';
 
 
 const Sidebar = () => {
   const role_id = useSelector((state : rootState) => state.userInformation.role_id);
   const port = process.env.REACT_APP_server_port;
-  const [adminRoleID,setadminRole] = useState(0) ;
+  const [adminRoleID,setadminRole] = useState(0);
+  const [logout,setLogout] = useState<boolean>(false);
   useEffect(() => {
     const getRole = async () => {
         try {
@@ -85,14 +87,16 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li className="hover:bg-slate-600 py-0 px-4 rounded-md hover:text-green-300"
-        onClick={() => dispatch(setSidebar())}>
-          <NavLink to="/" className='flex items-center gap-2 py-2'>
+        onClick={() => setLogout(true)}>
+          <div className='flex items-center gap-2 py-2'>
           <MdLogout />
           <span>Logout</span>
-          </NavLink>
+          </div>
         </li>
     </ul> 
     </div>
+    {logout &&
+    <Logout setLogout={setLogout}/>}
     </div>
     
   )
