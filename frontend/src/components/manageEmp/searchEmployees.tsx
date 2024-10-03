@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import employee from "../../interfaces/employee";
 import axios from "axios";
 import Employees from "./employees";
@@ -43,9 +43,14 @@ function SearchEmployees() {
     setEmployees([]);
   }
   }
+  const isAmounted = useRef<boolean>(false);
   useEffect(() => {
-  getEmployees();
+  if (isAmounted.current && search)
+    getEmployees();
+  else
+  isAmounted.current = true;
   },[info]);
+
   return (
     <div className="mb-6">
       <div className="mb-8">

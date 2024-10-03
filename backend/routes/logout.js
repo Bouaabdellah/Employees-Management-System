@@ -29,16 +29,17 @@ logoutRouter.post('/',handleJWT,async (req,res) => {
     },(err) => {
         if (err)
             return res.status(500).json({message : 'error in saving access token in redis blacklist'});
-        res.clearCookie('accessToken');
+        res.clearCookie('accessToken',{httpOnly : true, path : '/',
+            domain : `localhost`});
     });
     client.set('refreshToken',req.cookies.jwt,{
         EX : refreshTokenExpire
     },(err) => {
         if (err)
             return res.status(500).json({message : 'error in saving access token in redis blacklist'});
-        res.clearCookie('jwt');
+        res.clearCookie('jwt',{httpOnly : true, path : '/',
+            domain : `localhost`});
     });
-    client.quit();
     return res.status(200).json({message : 'logging out with sucess'});
 });
 
