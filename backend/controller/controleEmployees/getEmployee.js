@@ -5,7 +5,7 @@ const getEmployee = async (req,res) => {
     try {
        const {firstName,lastName,id,branchID,roleID,mgrID} = req.query;
        if (!firstName && !lastName && !id && !branchID && !roleID && !mgrID)
-        return res.status(400).json({message : "you need at least one index"}); 
+        return res.status(200).json({message : "you need at least one index",employees : []}); 
        const [employees] = await pool.query(`
         SELECT id,firstname,lastname,sex,email,birthday,start_day,
         salary,super_id,branch_id,role_id,image_url,is_manager

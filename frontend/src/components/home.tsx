@@ -1,9 +1,10 @@
+import Footer from "./footer";
 
 
 function Home() {
   return (
     <div>
-      home
+    <Footer/>
     </div>
   )
 }
