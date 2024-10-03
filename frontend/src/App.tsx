@@ -14,6 +14,7 @@ import ManageEmployees from './components/manageEmp/manageEmployees';
 import EmpProfile from './components/manageEmp/empProfile';
 import Branches from './components/branches/branches';
 import Branch from './components/branches/branch';
+import Footer from './components/footer';
 
 function LocationWrapper() {
   const location = useLocation();
@@ -43,7 +44,7 @@ function LocationWrapper() {
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div>
         <LocationWrapper />
       </div>
     </Router>

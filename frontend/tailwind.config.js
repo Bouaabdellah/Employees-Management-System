@@ -13,6 +13,13 @@ module.exports = {
         'facebook' : '#1877f2',
         'twitter' : '#1da1f2',
         'instagram' : '#e1306c'
+      },
+      keyframes : {
+        '0%' : 'translateY(0)',
+        '100%' : 'translateY(30px)'
+      },
+      animation : {
+        'up' : 'bounce 3s ease-in-out infinite'
       }
     },
   },
