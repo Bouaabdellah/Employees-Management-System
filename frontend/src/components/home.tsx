@@ -7,7 +7,7 @@ function Home() {
     <div className='flex flex-col min-h-screen'>
     <Container>
     <div className="mb-32 flex justify-center gap-8 md:gap-20 flex-wrap pt-10 items-center">
-    <div className="md:basis-[50%]">
+    <div className="lg:basis-[50%]">
       <div className="text-xl md:text-2xl font-bold capitalize scale-y-150 tracking-wide mb-8">
       welcome to our employees management system
       </div>

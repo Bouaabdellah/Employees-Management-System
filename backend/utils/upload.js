@@ -1,5 +1,4 @@
 import { fs } from 'file-system';
-import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
