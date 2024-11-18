@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import employee from "../../interfaces/employee";
 import { inputFormat } from "../../utils/date";
 import axios from "axios";
@@ -14,6 +14,12 @@ function EditeProfile({employee} : {employee : employee}){
   useEffect(() => {
     setUserInfo(employee);
   }, [employee]);
+  const referance = useRef<HTMLInputElement>(null); // we will use it to get the value of password 
+  // that is filled by default from the browser
+  useEffect(() => {
+    if (referance.current && !employee.password)
+      employee.password = referance.current.value;
+  }, [userInfo.password]);
   const [file,setFile] = useState<File | null>(null);
   const [validation,setValidation] = useState<personalInfo>(validationInitialze);
   const validateInfo = () => {
@@ -34,7 +40,8 @@ function EditeProfile({employee} : {employee : employee}){
     const validInfo = checkAllTrue(validations);
     return validInfo && (userInfo.firstname !== employee.firstname || userInfo.lastname !== employee.lastname
     || userInfo.sex !== employee.sex || userInfo.birthday !== employee.birthday ||
-    userInfo.email !== employee.email || userInfo.image_url !== employee.image_url);
+    userInfo.email !== employee.email || userInfo.image_url !== employee.image_url || 
+    employee.password !== userInfo.password);
   }
   const sendData = async () => {
   try {
@@ -137,7 +144,7 @@ function EditeProfile({employee} : {employee : employee}){
         </td>
         <td className="py-2">
         <input type="password" id="pwd" className="bg-gray-200 py-2 px-4 rounded-md"
-        onChange={(e) => setUserInfo({...userInfo,password : e.target.value})}/>
+        onChange={(e) => setUserInfo({...userInfo,password : e.target.value})} ref={referance}/>
         </td>
         </tr>
         <tr>

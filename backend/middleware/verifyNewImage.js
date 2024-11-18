@@ -18,6 +18,9 @@ const hashImage = (buffer) => {
 
 const verifyNewImage = async (req,res,next) => {
     try {
+    // check if there is an image in the modified profile
+    if (!req.file)
+        return makeMofications(req,res);
     // check if there is an image
     const {id} = req.body;
     const userID= +id;
