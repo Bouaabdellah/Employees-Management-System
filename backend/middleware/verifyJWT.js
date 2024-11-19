@@ -2,7 +2,13 @@ import jwt from 'jsonwebtoken';
 import refreshAccessToken from '../config/refAccessTok.js';
 import redis from 'redis';
 
-const client = redis.createClient();
+const client = redis.createClient({
+    password: process.env.redis_password,
+    socket: {
+        host: `redis-${process.env.redis_port}.c339.eu-west-3-1.ec2.redns.redis-cloud.com`,
+        port: process.env.redis_port
+    }
+});
 client.on('error',(err) => console.log(err));
 await client.connect();
 
