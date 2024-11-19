@@ -5,7 +5,7 @@ import redis from 'redis';
 const client = redis.createClient({
     password: process.env.redis_password,
     socket: {
-        host: process.env.redix_host,
+        host: process.env.redis_host,
         port: process.env.redis_port
     }
 });
