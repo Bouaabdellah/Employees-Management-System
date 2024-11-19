@@ -5,11 +5,11 @@ import redis from 'redis';
 const client = redis.createClient({
     password: process.env.redis_password,
     socket: {
-        host: `redis-${process.env.redis_port}.c339.eu-west-3-1.ec2.redns.redis-cloud.com`,
+        host: process.env.redix_host,
         port: process.env.redis_port
     }
 });
-client.on('error',(err) => console.log(err));
+client.on('error',(err) => console.error('Redis Client Error',err));
 await client.connect();
 
 const handleJWT = async (req,res,next) => {
