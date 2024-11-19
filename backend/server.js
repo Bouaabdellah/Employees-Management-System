@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = process.env.port;
+const port = process.env.PORT;
 app.use(cors(corsOptions));
 // allow using json in request
 app.use(express.json());
