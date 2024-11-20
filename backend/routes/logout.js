@@ -4,7 +4,11 @@ import redis from 'redis';
 import handleJWT from '../middleware/verifyJWT.js';
 
 const logoutRouter = express.Router();
-const client = redis.createClient();
+const client = redis.createClient({password: process.env.redis_password,
+    socket: {
+        host: process.env.redis_host,
+        port: process.env.redis_port
+    }});
 client.on('connect',() => {
     console.log('connecting to redis client');
 });
