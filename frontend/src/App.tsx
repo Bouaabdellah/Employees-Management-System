@@ -14,7 +14,6 @@ import ManageEmployees from './components/manageEmp/manageEmployees';
 import EmpProfile from './components/manageEmp/empProfile';
 import Branches from './components/branches/branches';
 import Branch from './components/branches/branch';
-import Footer from './components/footer';
 
 function LocationWrapper() {
   const location = useLocation();

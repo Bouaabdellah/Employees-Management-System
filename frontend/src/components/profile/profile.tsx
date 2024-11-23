@@ -6,7 +6,7 @@ import employee, { userInfoInitialze } from '../../interfaces/employee';
 import Container from '../utils/container';
 import EditeProfile from './editeProfile';
 import ProfileInfo from './profileInfo';
-import port from "../../utils/port";
+import host from '../../utils/host';
 
 function Profile() {
   const id = useSelector((state: rootState) => state.userInformation.id);
@@ -15,7 +15,7 @@ function Profile() {
     const fetchData = async () => {
       try {
         const response = await axios
-          .get(`http://localhost:${port}/employees/get_employee`, {
+          .get(`${host}/employees/get_employee`, {
             params: {
               id: id,
             },
@@ -35,7 +35,7 @@ function Profile() {
   return (
     <div className="py-12">
       <Container>
-        <ProfileInfo userInfo={userInfo}/>
+        <ProfileInfo userInfo={userInfo} />
         <EditeProfile employee={userInfo} />
       </Container>
     </div>
