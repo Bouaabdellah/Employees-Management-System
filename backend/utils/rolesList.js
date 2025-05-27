@@ -1,4 +1,4 @@
-import pool from "../utils/dbConnection.js";
+import pool from './dbConnection.js';
 
 const [rolesList] = await pool.query(`
     SELECT *

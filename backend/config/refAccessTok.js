@@ -21,7 +21,7 @@ const refreshAccessToken = async (req,res) => {
         if (!existUser.length)
             return res.status(401).json({message : "you are unothorized"});
         let newAccessToken = "";
-        await jwt.verify(
+        jwt.verify(
         refreshToken,
         process.env.refresh_token_secret,
         (err,decoded) => {
