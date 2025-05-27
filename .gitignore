@@ -28,3 +28,6 @@ yarn-error.log*
 
 # ignore vs code settings
 .vscode/
+
+# upload images
+backend/puplic
